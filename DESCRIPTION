@@ -1,0 +1,10 @@
+Package: hamcrest
+Version: 1.0
+Date: 2014-05-22
+Title: Hamcrest framework for writing unit tests in R
+License: file LICENSE
+Author: Alexander Bertram and Maarten-Jan Kallen
+Maintainer: Maarten-Jan Kallen <mj@bedatadriven.com>
+Description: Write unit tests using an R implementation of the Hamcrest framework.
+URL: https://github.com/bedatadriven/hamcrest
+BugReports: https://github.com/bedatadriven/hamcrest/issues
