@@ -1,120 +1,80 @@
 # --------------------------------------
 # ASSERTION FUNCTION
 # --------------------------------------
-deparse0 <- function(expr) {
-  paste(deparse(expr), collapse = "")
-}
 
+#' @export
 assertThat <- function(actual, matcher) {
-	
+
 	call <- match.call()
 
 	if(!matcher(actual)) {
-		stop(sprintf("\nassertThat(%s, %s) failed\nGot: %s", 
+		stop(sprintf("\nassertThat(%s, %s) failed\nGot: %s",
 				deparse0(call$actual), deparse0(call$matcher), deparse0(actual)))
 	}
 }
 
-
+#' @export
 assertTrue <- function(value) {
 
 	call <- match.call()
 
 	if(!identical(value, TRUE)) {
-		stop(sprintf("\nassertTrue(%s) failed\nGot: %s", 
+		stop(sprintf("\nassertTrue(%s) failed\nGot: %s",
 				deparse0(call$value), deparse0(value)))
-	}	
+	}
 }
 
-
+#' @export
 assertFalse <- function(value) {
 
 	call <- match.call()
 
 	if(!identical(value, FALSE)) {
-		stop(sprintf("\nassertFalse(%s) failed\nGot: %s", 
+		stop(sprintf("\nassertFalse(%s) failed\nGot: %s",
 				deparse0(call$value), deparse0(value)))
-	}	
+	}
 }
-
-
 
 # --------------------------------------
 # MATCHER FUNCTIONS
 # --------------------------------------
+
+#' NOTE: this function isn't used in Renjin test (currently).
+#' @noRd
 compareReal <- function(actual, expected, tol) {
   rel.diff <- abs(expected - actual) / abs(expected)
   finite <- is.finite(rel.diff) & expected != 0
   finiteValuesCloseEnough <- all(rel.diff[finite] < tol)
   nonFiniteValuesIdentical <- identical(expected[!finite], actual[!finite])
-  
+
   return( finiteValuesCloseEnough && nonFiniteValuesIdentical )
 }
 
-identical.attributes <- function(actual, expected, tol = NULL) {
-    # Should have the same set of names,
-    # though not necessarily in the same order
-    if(length(setdiff(names(expected), names(actual))) > 0) {
-        return(FALSE)
-    }
-    
-    # Otherwise verify that the values are identical
-    for(a in names(expected)) {
-        if(!identical.rec(actual[[a]], expected[[a]], tol)) {
-            return(FALSE)
-        }
-    }
-    return(TRUE)
-}
-
-identical.rec <- function(actual, expected, tol = NULL) {
-    if (length(actual) != length(expected))
-      return(FALSE)
-    if (typeof(actual) != typeof(expected))
-      return(FALSE)
-    if (!identical.attributes(attributes(actual), attributes(expected), tol)) {
-      return(FALSE)
-    }
-    if (is.list(actual)) {
-      for (i in seq_along(actual)) {
-        isSame <- identical.rec(actual[[i]], expected[[i]], tol)
-        if (!isSame){
-          return(FALSE)
-        }
-      }
-      return(TRUE)
-    } else if (!is.null(tol) && is.double(actual)) {
-      compareReal(unclass(actual), unclass(expected), tol)
-    } else if (!is.null(tol) && is.complex(actual)) {
-      compareReal(unclass(Re(actual)), unclass(Re(expected)), tol) &&
-        compareReal(unclass(Im(actual)), unclass(Im(expected)), tol)
-    } else {
-      return(identical(actual, expected))
-    }
-}
-
-
+#' @export
 closeTo <- function(expected, delta) {
     stopifnot(is.numeric(expected) & is.numeric(delta) & length(delta) == 1L)
 	function(actual) {
 		length(expected) == length(actual) &&
-				all(abs(expected-actual)<delta)	
+				all(abs(expected-actual)<delta)
 	}
 }
 
+#' @export
 identicalTo <- function(expected, tol = NULL) {
-	tolMissing <- missing(tol) 
+	tolMissing <- missing(tol)
 	function(actual) {
 	    identical.rec(actual, expected, tol)
 	}
 }
 
+#' @export
 deparsesTo <- function(expected) {
     function(actual) {
         identical(paste(deparse(actual), collapse=""), expected)
     }
 }
 
+#' @export
 equalTo <- function(expected) {
 	function(actual) {
 		length(actual) == length(expected) &&
@@ -122,41 +82,46 @@ equalTo <- function(expected) {
 	}
 }
 
+#' @export
 instanceOf <- function(expected) {
     function(actual) {
         inherits(actual, expected)
     }
 }
 
+#' @export
 isTrue <- function() {
     function(actual) {
         identical(TRUE, actual)
     }
 }
 
+#' @export
 isFalse <- function() {
     function(actual) {
         identical(FALSE, actual)
     }
 }
 
+#' @export
 throwsError <- function() {
 	function(actual) {
 		result <- tryCatch( force(actual), error = function(e) e )
-		return(inherits(result, "error")) 
+		return(inherits(result, "error"))
 	}
 }
 
+#' @export
 emitsWarning <- function() {
 	function(actual) {
 		result <- tryCatch( force(actual), warning = function(e) e )
-		return(inherits(result, "warning")) 
+		return(inherits(result, "warning"))
 	}
 }
 
+#' @export
 not <- function(matcher) {
 	function(actual) {
 		return(!matcher(actual))
 	}
 }
-
