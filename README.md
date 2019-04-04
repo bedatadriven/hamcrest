@@ -1,19 +1,26 @@
 hamcrest
 ========
 
-GNU R package implementing the Hamcrest framework for writing unit tests
+GNU R package implementing the Hamcrest framework for writing unit tests.
 
 Installation
 ------------
+
+You can install the development version:
+
+    # install.packages("devtools")
+    devtools::install_github("bedatadriven/hamcrest")
 
 From source:
 
     git clone https://github.com/bedatadriven/hamcrest.git
     R CMD INSTALL hamcrest
 
-From GitHub using the *devtools* package:
+See also
+-------
 
-    install_github("bedatadriven/hamcrest")
+*hamcrest* package is extensively used in **Renjin**, a JVM-based interpreter
+for the R language. See www.renjin.org for more details.
 
 License
 -------
