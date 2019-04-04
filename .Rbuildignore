@@ -1,2 +1,2 @@
-.git
-.Rbuildignore
+^.*\.Rproj$
+^\.Rproj\.user$

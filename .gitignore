@@ -1,1 +1,10 @@
-*~
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*-Ex.R
+/*.tar.gz
+/*.Rcheck/
+.Rproj.user/
+.Rproj.user
+*.Rproj
