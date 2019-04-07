@@ -54,7 +54,10 @@ assertThat <- function(actual, matcher) {
 #' assertTrue
 #'
 #' @param value a vector
-#'
+#' @examples \dontrun{
+#' assertTrue(is.numeric(2019))
+#' }
+#' @seealso isTrue
 #' @export
 assertTrue <- function(value) {
 
@@ -69,7 +72,10 @@ assertTrue <- function(value) {
 #' assertFalse
 #'
 #' @param value a vector
-#'
+#' @examples \dontrun{
+#' assertFalse(is.character(1L))
+#' }
+#' @seealso isFalse
 #' @export
 assertFalse <- function(value) {
 
@@ -87,11 +93,12 @@ assertFalse <- function(value) {
 
 #' closeTo
 #'
-#' @param expected object passed to the matcher function. For \code{closeTo()}
-#'   this argument must be a numeric vector.
+#' @param expected a numeric vector. 
 #' @param delta a numeric vector of length one that defines the maximum allowed
 #'   difference
-#'
+#' @examples \dontrun{
+#' assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
+#' }
 #' @export
 closeTo <- function(expected, delta) {
     stopifnot(is.numeric(expected) & is.numeric(delta) & length(delta) == 1L)
@@ -103,10 +110,11 @@ closeTo <- function(expected, delta) {
 
 #' identicalTo
 #'
-#' @param expected object passed to the matcher function. For \code{closeTo()}
-#'   this argument must be a numeric vector.
+#' @param expected object passed to the matcher function.
 #' @param tol numeric tolerance.
-#'
+#' @examples \dontrun{
+#' assertThat(floor(-1.5), identicalTo(-2))
+#' }
 #' @export
 identicalTo <- function(expected, tol = NULL) {
 	tolMissing <- missing(tol)
@@ -117,9 +125,10 @@ identicalTo <- function(expected, tol = NULL) {
 
 #' deparsesTo
 #'
-#' @param expected object passed to the matcher function. For \code{closeTo()}
-#'   this argument must be a numeric vector.
-#'
+#' @param expected object passed to the matcher function.
+#' @examples \dontrun{
+#' assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo("sin(3.14)"))
+#' }
 #' @export
 deparsesTo <- function(expected) {
     function(actual) {
@@ -129,9 +138,10 @@ deparsesTo <- function(expected) {
 
 #' equalTo
 #'
-#' @param expected object passed to the matcher function. For \code{closeTo()}
-#'   this argument must be a numeric vector.
-#'
+#' @param expected object passed to the matcher function.
+#' @examples \dontrun{
+#' assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
+#' }
 #' @export
 equalTo <- function(expected) {
   function(actual) {
@@ -144,9 +154,16 @@ equalTo <- function(expected) {
 
 #' instanceOf
 #'
-#' @param expected object passed to the matcher function. For \code{closeTo()}
-#'   this argument must be a numeric vector.
-#'
+#' @param expected object passed to the matcher function.
+#' @examples \dontrun{
+#' df <- data.frame(x = c(1, 1, 1, 2, 2, 3, 3),
+#' y = c(1, 2, 3, 4, 5, 6, 7))
+#' res <- by(df$y, df$x, sum)
+#' assertThat(res, instanceOf("by"))
+#' 
+#' class(df) <- "result"
+#' assertThat(df, instanceOf("result"))
+#' }
 #' @export
 instanceOf <- function(expected) {
     function(actual) {
@@ -156,6 +173,10 @@ instanceOf <- function(expected) {
 
 #' isTrue
 #'
+#' @examples \dontrun{
+#' assertThat(is.integer(1L), isTrue())
+#' }
+#' @seealso assertTrue
 #' @export
 isTrue <- function() {
     function(actual) {
@@ -165,6 +186,10 @@ isTrue <- function() {
 
 #' isFalse
 #'
+#' @examples \dontrun{
+#' assertThat(is.character(seq(10)), isFalse())
+#' }
+#' @seealso assertFalse
 #' @export
 isFalse <- function() {
     function(actual) {
@@ -173,7 +198,10 @@ isFalse <- function() {
 }
 
 #' throwsError
-#'
+#' 
+#' @examples \dontrun{
+#' assertThat(log("a"), throwsError())
+#' }
 #' @export
 throwsError <- function() {
 	function(actual) {
@@ -184,6 +212,9 @@ throwsError <- function() {
 
 #' emitsWarning
 #'
+#' @examples \dontrun{
+#' assertThat(any(range(2.0,3.0)), emitsWarning())
+#' }
 #' @export
 emitsWarning <- function() {
 	function(actual) {
@@ -196,7 +227,9 @@ emitsWarning <- function() {
 #'
 #' @param matcher one of the matcher functions, see Details of
 #'   \code{\link{assertThat}}.
-#'
+#' @examples \dontrun{
+#' assertThat(1, not(identicalTo(2)))
+#' }
 #' @export
 not <- function(matcher) {
 	function(actual) {
