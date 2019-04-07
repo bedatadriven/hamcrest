@@ -7,9 +7,19 @@
 instanceOf(expected)
 }
 \arguments{
-\item{expected}{object passed to the matcher function. For \code{closeTo()}
-this argument must be a numeric vector.}
+\item{expected}{object passed to the matcher function.}
 }
 \description{
 instanceOf
+}
+\examples{
+\dontrun{
+df <- data.frame(x = c(1, 1, 1, 2, 2, 3, 3),
+y = c(1, 2, 3, 4, 5, 6, 7))
+res <- by(df$y, df$x, sum)
+assertThat(res, instanceOf("by"))
+
+class(df) <- "result"
+assertThat(df, instanceOf("result"))
+}
 }

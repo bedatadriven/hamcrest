@@ -7,9 +7,13 @@
 deparsesTo(expected)
 }
 \arguments{
-\item{expected}{object passed to the matcher function. For \code{closeTo()}
-this argument must be a numeric vector.}
+\item{expected}{object passed to the matcher function.}
 }
 \description{
 deparsesTo
+}
+\examples{
+\dontrun{
+assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo("sin(3.14)"))
+}
 }

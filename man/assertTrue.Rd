@@ -12,3 +12,11 @@ assertTrue(value)
 \description{
 assertTrue
 }
+\examples{
+\dontrun{
+assertTrue(is.numeric(2019))
+}
+}
+\seealso{
+isTrue
+}

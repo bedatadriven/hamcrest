@@ -9,3 +9,11 @@ isTrue()
 \description{
 isTrue
 }
+\examples{
+\dontrun{
+assertThat(is.integer(1L), isTrue())
+}
+}
+\seealso{
+assertTrue
+}

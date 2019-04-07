@@ -9,3 +9,11 @@ isFalse()
 \description{
 isFalse
 }
+\examples{
+\dontrun{
+assertThat(is.character(seq(10)), isFalse())
+}
+}
+\seealso{
+assertFalse
+}

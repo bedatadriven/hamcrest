@@ -7,12 +7,16 @@
 closeTo(expected, delta)
 }
 \arguments{
-\item{expected}{object passed to the matcher function. For \code{closeTo()}
-this argument must be a numeric vector.}
+\item{expected}{a numeric vector.}
 
 \item{delta}{a numeric vector of length one that defines the maximum allowed
 difference}
 }
 \description{
 closeTo
+}
+\examples{
+\dontrun{
+assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
+}
 }

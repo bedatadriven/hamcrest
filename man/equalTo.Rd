@@ -7,9 +7,13 @@
 equalTo(expected)
 }
 \arguments{
-\item{expected}{object passed to the matcher function. For \code{closeTo()}
-this argument must be a numeric vector.}
+\item{expected}{object passed to the matcher function.}
 }
 \description{
 equalTo
+}
+\examples{
+\dontrun{
+assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
+}
 }

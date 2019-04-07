@@ -9,3 +9,8 @@ emitsWarning()
 \description{
 emitsWarning
 }
+\examples{
+\dontrun{
+assertThat(any(range(2.0,3.0)), emitsWarning())
+}
+}

@@ -12,3 +12,11 @@ assertFalse(value)
 \description{
 assertFalse
 }
+\examples{
+\dontrun{
+assertFalse(is.character(1L))
+}
+}
+\seealso{
+isFalse
+}

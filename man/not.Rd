@@ -13,3 +13,8 @@ not(matcher)
 \description{
 not
 }
+\examples{
+\dontrun{
+assertThat(1, not(identicalTo(2)))
+}
+}

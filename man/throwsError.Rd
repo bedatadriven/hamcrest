@@ -9,3 +9,8 @@ throwsError()
 \description{
 throwsError
 }
+\examples{
+\dontrun{
+assertThat(log("a"), throwsError())
+}
+}

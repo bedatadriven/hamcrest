@@ -29,7 +29,7 @@ Useful links:
 Authors:
 \itemize{
   \item Alexander Bertram
-  \item Parham Solaimani
+  \item Parham Solaimani (0000-0001-5292-1379)
   \item Metin Yazici
 }
 
