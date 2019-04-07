@@ -15,5 +15,5 @@ assertThat(is.character(seq(10)), isFalse())
 }
 }
 \seealso{
-assertFalse
+\code{\link{assertFalse}}
 }

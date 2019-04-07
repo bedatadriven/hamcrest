@@ -39,3 +39,16 @@ same as \code{assertThat(actual, identicalTo(TRUE))}. Use
 has class (using the \code{\link{inherits}} function) \code{expected}.
 }
 }
+\examples{
+\dontrun{
+assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
+assertThat(floor(-1.5), identicalTo(-2))
+assertThat(qnorm(0, 0, 1,  TRUE,  FALSE), equalTo(-Inf))
+assertThat(is.integer(1L), isTrue())
+assertThat(is.character(seq(10)), isFalse())
+assertThat(log("a"), throwsError())
+assertThat(any(range(2.0,3.0)), emitsWarning())
+assertThat(1, not(identicalTo(2)))
+}
+
+}

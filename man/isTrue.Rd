@@ -15,5 +15,5 @@ assertThat(is.integer(1L), isTrue())
 }
 }
 \seealso{
-assertTrue
+\code{\link{assertTrue}}
 }

@@ -34,6 +34,17 @@
 #' \item \code{assertThat(actual, instanceOf(expected))} checks if \code{actual}
 #' has class (using the \code{\link{inherits}} function) \code{expected}.
 #' }
+#' 
+#' @examples \dontrun{
+#' assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
+#' assertThat(floor(-1.5), identicalTo(-2))
+#' assertThat(qnorm(0, 0, 1,  TRUE,  FALSE), equalTo(-Inf))
+#' assertThat(is.integer(1L), isTrue())
+#' assertThat(is.character(seq(10)), isFalse())
+#' assertThat(log("a"), throwsError())
+#' assertThat(any(range(2.0,3.0)), emitsWarning())
+#' assertThat(1, not(identicalTo(2)))
+#' }
 #'
 #' @export
 assertThat <- function(actual, matcher) {
@@ -51,13 +62,13 @@ assertThat <- function(actual, matcher) {
   }
 }
 
-#' assertTrue
+#' Is the matched assertion true?
 #'
-#' @param value a vector
+#' @param value a vector.
 #' @examples \dontrun{
 #' assertTrue(is.numeric(2019))
 #' }
-#' @seealso isTrue
+#' @seealso \code{\link{isTrue}}
 #' @export
 assertTrue <- function(value) {
 
@@ -69,13 +80,13 @@ assertTrue <- function(value) {
 	}
 }
 
-#' assertFalse
+#' Is the matched assertion false?
 #'
-#' @param value a vector
+#' @param value a vector.
 #' @examples \dontrun{
 #' assertFalse(is.character(1L))
 #' }
-#' @seealso isFalse
+#' @seealso \code{\link{isFalse}}
 #' @export
 assertFalse <- function(value) {
 
@@ -91,7 +102,7 @@ assertFalse <- function(value) {
 # MATCHER FUNCTIONS
 # --------------------------------------
 
-#' closeTo
+#' How much do actual value(s) close to expected value(s)?
 #'
 #' @param expected a numeric vector. 
 #' @param delta a numeric vector of length one that defines the maximum allowed
@@ -99,6 +110,7 @@ assertFalse <- function(value) {
 #' @examples \dontrun{
 #' assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
 #' }
+#' @seealso \code{\link{identicalTo}},\code{\link{equalTo}}
 #' @export
 closeTo <- function(expected, delta) {
     stopifnot(is.numeric(expected) & is.numeric(delta) & length(delta) == 1L)
@@ -108,19 +120,37 @@ closeTo <- function(expected, delta) {
 	}
 }
 
-#' identicalTo
+#' Is actual value identical to expected value?
 #'
 #' @param expected object passed to the matcher function.
 #' @param tol numeric tolerance.
 #' @examples \dontrun{
 #' assertThat(floor(-1.5), identicalTo(-2))
 #' }
+#' @seealso \code{\link{closeTo}},\code{\link{equalTo}}
 #' @export
 identicalTo <- function(expected, tol = NULL) {
 	tolMissing <- missing(tol)
 	function(actual) {
 	    identical.rec(actual, expected, tol)
 	}
+}
+
+#' Is actual value equal to expected value?
+#'
+#' @param expected object passed to the matcher function.
+#' @examples \dontrun{
+#' assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
+#' }
+#' \code{\link{identicalTo}},\code{\link{closeTo}}
+#' @export
+equalTo <- function(expected) {
+  function(actual) {
+    if (is.list(actual))
+      equal.rec(actual, expected)
+    else
+      length(actual) == length(expected) && all(actual == expected)
+  }
 }
 
 #' deparsesTo
@@ -134,22 +164,6 @@ deparsesTo <- function(expected) {
     function(actual) {
         identical(paste(deparse(actual), collapse=""), expected)
     }
-}
-
-#' equalTo
-#'
-#' @param expected object passed to the matcher function.
-#' @examples \dontrun{
-#' assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
-#' }
-#' @export
-equalTo <- function(expected) {
-  function(actual) {
-    if (is.list(actual))
-      equal.rec(actual, expected)
-    else
-      length(actual) == length(expected) && all(actual == expected)
-  }
 }
 
 #' instanceOf
@@ -176,7 +190,7 @@ instanceOf <- function(expected) {
 #' @examples \dontrun{
 #' assertThat(is.integer(1L), isTrue())
 #' }
-#' @seealso assertTrue
+#' @seealso \code{\link{assertTrue}}
 #' @export
 isTrue <- function() {
     function(actual) {
@@ -189,7 +203,7 @@ isTrue <- function() {
 #' @examples \dontrun{
 #' assertThat(is.character(seq(10)), isFalse())
 #' }
-#' @seealso assertFalse
+#' @seealso \code{\link{assertFalse}}
 #' @export
 isFalse <- function() {
     function(actual) {

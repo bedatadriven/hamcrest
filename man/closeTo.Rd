@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{closeTo}
 \alias{closeTo}
-\title{closeTo}
+\title{How much do actual value(s) close to expected value(s)?}
 \usage{
 closeTo(expected, delta)
 }
@@ -13,10 +13,13 @@ closeTo(expected, delta)
 difference}
 }
 \description{
-closeTo
+How much do actual value(s) close to expected value(s)?
 }
 \examples{
 \dontrun{
 assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
 }
+}
+\seealso{
+\code{\link{identicalTo}},\code{\link{equalTo}}
 }
