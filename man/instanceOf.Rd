@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{instanceOf}
 \alias{instanceOf}
-\title{Assert that the value is instance of an expected value}
+\title{Assert that the actual value is instance of an expected value}
 \usage{
 instanceOf(expected)
 }

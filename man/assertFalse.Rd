@@ -10,7 +10,14 @@ assertFalse(value)
 \item{value}{a vector with any length.}
 }
 \description{
-Assert that the value evaluates to false
+Asserts that the given \code{value} evaluates to \code{FALSE}. If the value
+evaluates does not evaluate to \code{FALSE}, then an error condition is
+raised.
+}
+\details{
+The \code{\link{identical}} function is used to check this condition,
+so this function will also raise an error condition if \code{value} evaluates
+to \code{0} or if the result of the evaluation has any attributes.
 }
 \examples{
 \dontrun{
@@ -18,7 +25,9 @@ assertFalse(is.character(1L))
 }
 }
 \seealso{
-\code{\link{assertThat}}\cr
-\code{\link{assertTrue}}\cr
-\code{\link{isFalse}}
+\itemize{
+\item \code{\link{assertThat}}
+\item \code{\link{assertTrue}}
+\item \code{\link{isFalse}}
+}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{equalTo}
 \alias{equalTo}
-\title{Assert that the value is equal to an expected value}
+\title{Assert that the actual value is equal to an expected value}
 \usage{
 equalTo(expected)
 }
@@ -10,7 +10,8 @@ equalTo(expected)
 \item{expected}{object passed to the matcher function.}
 }
 \description{
-Assert that the value is equal to an expected value
+A \emph{matcher} function which will return \code{TRUE} if the actual value
+is equal to the expected value.
 }
 \examples{
 \dontrun{

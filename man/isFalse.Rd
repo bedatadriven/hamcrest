@@ -2,12 +2,12 @@
 % Please edit documentation in R/hamcrest.R
 \name{isFalse}
 \alias{isFalse}
-\title{isFalse}
+\title{Assert that the actual value is false}
 \usage{
 isFalse()
 }
 \description{
-isFalse
+Assert that the actual value is false
 }
 \examples{
 \dontrun{

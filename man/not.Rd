@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{not}
 \alias{not}
-\title{not}
+\title{Assert that the actual value not exists}
 \usage{
 not(matcher)
 }
@@ -11,7 +11,7 @@ not(matcher)
 \code{\link{assertThat}}.}
 }
 \description{
-not
+Assert that the actual value not exists
 }
 \examples{
 \dontrun{

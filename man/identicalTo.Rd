@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{identicalTo}
 \alias{identicalTo}
-\title{Assert that the value is identical to an expected value}
+\title{Assert that the actual value is identical to an expected value}
 \usage{
 identicalTo(expected, tol = NULL)
 }
@@ -12,7 +12,8 @@ identicalTo(expected, tol = NULL)
 \item{tol}{numeric tolerance.}
 }
 \description{
-Assert that the value is identical to an expected value
+A \emph{matcher} function which will return \code{TRUE} if the actual value
+is identical to the expected value.
 }
 \examples{
 \dontrun{

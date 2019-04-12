@@ -2,12 +2,13 @@
 % Please edit documentation in R/hamcrest.R
 \name{emitsWarning}
 \alias{emitsWarning}
-\title{emitsWarning}
+\title{Assert that the actual value emits warning}
 \usage{
 emitsWarning()
 }
 \description{
-emitsWarning
+A \emph{matcher} function which will return \code{TRUE} if the actual value
+is identical to the expected value.
 }
 \examples{
 \dontrun{

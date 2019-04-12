@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{deparsesTo}
 \alias{deparsesTo}
-\title{Assert that the value deparses to an expected value}
+\title{Assert that the actual value deparses to an expected value}
 \usage{
 deparsesTo(expected)
 }

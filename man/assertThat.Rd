@@ -12,11 +12,16 @@ assertThat(actual, matcher)
 \item{matcher}{one of the matcher functions, see Details}
 }
 \description{
-Use the \code{assertThat()} function to write your unit test: the first
+Use the \code{assertThat()} function to write your unit test. The first
 argument is the result you want to test and the second argument is the
 matcher that embodies the rule against which you want to test the result.
 }
 \details{
+The second argument \code{matcher} of assertThat should be a matcher
+function. Matcher function returns a function which references the
+\emph{expected value}. The \code{actual} value is passed to the resulting
+matcher function.
+
 \itemize{
 \item \code{assertThat(actual, equalTo(expected))} checks that \code{actual}
 is equal to (using the \code{==} comparison operator) \code{expected}. The

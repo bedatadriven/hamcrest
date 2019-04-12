@@ -5,7 +5,7 @@
 
 #' Make a test assertion
 #'
-#' Use the \code{assertThat()} function to write your unit test: the first
+#' Use the \code{assertThat()} function to write your unit test. The first
 #' argument is the result you want to test and the second argument is the
 #' matcher that embodies the rule against which you want to test the result.
 #'
@@ -13,6 +13,11 @@
 #' @param matcher one of the matcher functions, see Details
 #'
 #' @details
+#' The second argument \code{matcher} of assertThat should be a matcher
+#' function. Matcher function returns a function which references the
+#' \emph{expected value}. The \code{actual} value is passed to the resulting
+#' matcher function.
+#'
 #' \itemize{
 #' \item \code{assertThat(actual, equalTo(expected))} checks that \code{actual}
 #' is equal to (using the \code{==} comparison operator) \code{expected}. The
@@ -62,7 +67,15 @@ assertThat <- function(actual, matcher) {
 
 #' Assert that the value evaluates to true
 #'
+#' Asserts that the given \code{value} evaluates to \code{TRUE}. If the value
+#' evaluates does not evaluate to \code{TRUE}, then an error condition is
+#' raised.
+#'
 #' @param value a vector with any length.
+#' @details
+#' The \code{\link{identical}} function is used to check this condition,
+#' so this function will also raise an error condition if \code{value} evaluates
+#' to \code{0} or if the result of the evaluation has any attributes.
 #'
 #' @examples \dontrun{
 #' assertTrue(is.numeric(2019))
@@ -86,15 +99,24 @@ assertTrue <- function(value) {
 
 #' Assert that the value evaluates to false
 #'
-#' @param value a vector with any length.
+#' Asserts that the given \code{value} evaluates to \code{FALSE}. If the value
+#' evaluates does not evaluate to \code{FALSE}, then an error condition is
+#' raised.
 #'
+#' @param value a vector with any length.
+#' @details
+#' The \code{\link{identical}} function is used to check this condition,
+#' so this function will also raise an error condition if \code{value} evaluates
+#' to \code{0} or if the result of the evaluation has any attributes.
 #' @examples \dontrun{
 #' assertFalse(is.character(1L))
 #' }
 #' @seealso
-#' \code{\link{assertThat}}\cr
-#' \code{\link{assertTrue}}\cr
-#' \code{\link{isFalse}}
+#' \itemize{
+#' \item \code{\link{assertThat}}
+#' \item \code{\link{assertTrue}}
+#' \item \code{\link{isFalse}}
+#' }
 #' @export
 assertFalse <- function(value) {
 
@@ -110,11 +132,11 @@ assertFalse <- function(value) {
 # MATCHER FUNCTIONS
 # --------------------------------------
 
-#' Assert that the value is close to an expected value
+#' Assert that the actual value is close to an expected value
 #'
-#' Returning a \emph{matcher} function which will return \code{TRUE} if its
-#' first argument is a numeric vector of length 1 whose absolute difference with
-#' expected is greater than or equal to the value of \code{delta}.
+#' A \emph{matcher} function which will return \code{TRUE} if its first argument
+#' is a numeric vector of length 1 whose absolute difference with expected is
+#' greater than or equal to the value of \code{delta}.
 #'
 #' @param expected a numeric vector.
 #' @param delta a numeric vector of length one that defines the maximum allowed
@@ -138,7 +160,10 @@ closeTo <- function(expected, delta) {
 	}
 }
 
-#' Assert that the value is identical to an expected value
+#' Assert that the actual value is identical to an expected value
+#'
+#' A \emph{matcher} function which will return \code{TRUE} if the actual value
+#' is identical to the expected value.
 #'
 #' @param expected object passed to the matcher function.
 #' @param tol numeric tolerance.
@@ -158,7 +183,10 @@ identicalTo <- function(expected, tol = NULL) {
 	}
 }
 
-#' Assert that the value is equal to an expected value
+#' Assert that the actual value is equal to an expected value
+#'
+#' A \emph{matcher} function which will return \code{TRUE} if the actual value
+#' is equal to the expected value.
 #'
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
@@ -179,7 +207,7 @@ equalTo <- function(expected) {
   }
 }
 
-#' Assert that the value deparses to an expected value
+#' Assert that the actual value deparses to an expected value
 #'
 #' Deparsing transforms unevaluated expressions into character vectors.
 #'
@@ -194,7 +222,7 @@ deparsesTo <- function(expected) {
     }
 }
 
-#' Assert that the value is instance of an expected value
+#' Assert that the actual value is instance of an expected value
 #'
 #' The expected value checks where the class name of the actual object is
 #' inherited. This is about checking S3 and S4 classes and the call uses the
@@ -217,7 +245,7 @@ instanceOf <- function(expected) {
     }
 }
 
-#' isTrue
+#' Assert that the actual value is true
 #'
 #' @examples \dontrun{
 #' assertThat(is.integer(1L), isTrue())
@@ -235,7 +263,7 @@ isTrue <- function() {
     }
 }
 
-#' isFalse
+#' Assert that the actual value is false
 #'
 #' @examples \dontrun{
 #' assertThat(is.character(seq(10)), isFalse())
@@ -253,7 +281,7 @@ isFalse <- function() {
     }
 }
 
-#' throwsError
+#' Assert that the actual value throws error
 #'
 #' @examples \dontrun{
 #' assertThat(log("a"), throwsError())
@@ -270,7 +298,10 @@ throwsError <- function() {
 	}
 }
 
-#' emitsWarning
+#' Assert that the actual value emits warning
+#'
+#' A \emph{matcher} function which will return \code{TRUE} if the actual value
+#' is identical to the expected value.
 #'
 #' @examples \dontrun{
 #' assertThat(any(range(2.0,3.0)), emitsWarning())
@@ -287,7 +318,7 @@ emitsWarning <- function() {
 	}
 }
 
-#' not
+#' Assert that the actual value not exists
 #'
 #' @param matcher one of the matcher functions, see Details of
 #'   \code{\link{assertThat}}.

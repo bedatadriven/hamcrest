@@ -43,3 +43,4 @@ assertThat(any(range(2.0,3.0)), emitsWarning())
 
 ### not
 assertThat(1, not(identicalTo(2)))
+

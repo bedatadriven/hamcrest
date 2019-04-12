@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{closeTo}
 \alias{closeTo}
-\title{Assert that the value is close to an expected value}
+\title{Assert that the actual value is close to an expected value}
 \usage{
 closeTo(expected, delta)
 }
@@ -13,9 +13,9 @@ closeTo(expected, delta)
 difference.}
 }
 \description{
-Returning a \emph{matcher} function which will return \code{TRUE} if its
-first argument is a numeric vector of length 1 whose absolute difference with
-expected is greater than or equal to the value of \code{delta}.
+A \emph{matcher} function which will return \code{TRUE} if its first argument
+is a numeric vector of length 1 whose absolute difference with expected is
+greater than or equal to the value of \code{delta}.
 }
 \details{
 The \code{closeTo()} matcher function can only be used for numeric arguments.
