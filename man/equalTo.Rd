@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{equalTo}
 \alias{equalTo}
-\title{Is actual value equal to expected value?}
+\title{Assert that the value is equal to an expected value}
 \usage{
 equalTo(expected)
 }
@@ -10,11 +10,16 @@ equalTo(expected)
 \item{expected}{object passed to the matcher function.}
 }
 \description{
-Is actual value equal to expected value?
+Assert that the value is equal to an expected value
 }
 \examples{
 \dontrun{
 assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
 }
-\\code{\\link{identicalTo}},\\code{\\link{closeTo}}
+}
+\seealso{
+\itemize{
+\item \code{\link{identicalTo}}
+\item \code{\link{closeTo}}
+}
 }

@@ -15,5 +15,9 @@ assertThat(is.character(seq(10)), isFalse())
 }
 }
 \seealso{
-\code{\link{assertFalse}}
+\itemize{
+\item \code{\link{assertTrue}}
+\item \code{\link{assertFalse}}
+\item \code{\link{isTrue}}
+}
 }

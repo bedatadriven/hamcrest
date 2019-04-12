@@ -14,3 +14,8 @@ throwsError
 assertThat(log("a"), throwsError())
 }
 }
+\seealso{
+\itemize{
+\item \code{\link{emitsWarning}}
+}
+}

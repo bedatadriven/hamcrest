@@ -15,5 +15,9 @@ assertThat(is.integer(1L), isTrue())
 }
 }
 \seealso{
-\code{\link{assertTrue}}
+\itemize{
+\item \code{\link{assertTrue}}
+\item \code{\link{assertFalse}}
+\item \code{\link{isFalse}}
+}
 }

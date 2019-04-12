@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{closeTo}
 \alias{closeTo}
-\title{How much do actual value(s) close to expected value(s)?}
+\title{Assert that the value is close to an expected value}
 \usage{
 closeTo(expected, delta)
 }
@@ -10,10 +10,15 @@ closeTo(expected, delta)
 \item{expected}{a numeric vector.}
 
 \item{delta}{a numeric vector of length one that defines the maximum allowed
-difference}
+difference.}
 }
 \description{
-How much do actual value(s) close to expected value(s)?
+Returning a \emph{matcher} function which will return \code{TRUE} if its
+first argument is a numeric vector of length 1 whose absolute difference with
+expected is greater than or equal to the value of \code{delta}.
+}
+\details{
+The \code{closeTo()} matcher function can only be used for numeric arguments.
 }
 \examples{
 \dontrun{
@@ -21,5 +26,8 @@ assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
 }
 }
 \seealso{
-\code{\link{identicalTo}},\code{\link{equalTo}}
+\itemize{
+\item \code{\link{identicalTo}}
+\item \code{\link{equalTo}}
+}
 }

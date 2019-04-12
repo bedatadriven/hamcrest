@@ -24,8 +24,7 @@ is equal to (using the \code{==} comparison operator) \code{expected}. The
 strings.
 \item \code{assertThat(actual, closeTo(expected, delta))} checks that
 \code{actual} is \emph{close to} \code{expected} with a maximum allowed
-difference of \code{delta}. The \code{closeTo()} matcher function can only be
-used for numeric arguments.
+difference of \code{delta}.
 \item \code{assertThat(actual, identicalTo(expected))} checks if
 \code{actual} is \emph{identical} to (using the \code{\link{identical}}
 function) \code{expected}.
@@ -50,5 +49,4 @@ assertThat(log("a"), throwsError())
 assertThat(any(range(2.0,3.0)), emitsWarning())
 assertThat(1, not(identicalTo(2)))
 }
-
 }

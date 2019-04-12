@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{instanceOf}
 \alias{instanceOf}
-\title{instanceOf}
+\title{Assert that the value is instance of an expected value}
 \usage{
 instanceOf(expected)
 }
@@ -10,7 +10,9 @@ instanceOf(expected)
 \item{expected}{object passed to the matcher function.}
 }
 \description{
-instanceOf
+The expected value checks where the class name of the actual object is
+inherited. This is about checking S3 and S4 classes and the call uses the
+base function \code{\link{inherits}}.
 }
 \examples{
 \dontrun{

@@ -2,15 +2,15 @@
 % Please edit documentation in R/hamcrest.R
 \name{assertTrue}
 \alias{assertTrue}
-\title{Is the matched assertion true?}
+\title{Assert that the value evaluates to true}
 \usage{
 assertTrue(value)
 }
 \arguments{
-\item{value}{a vector.}
+\item{value}{a vector with any length.}
 }
 \description{
-Is the matched assertion true?
+Assert that the value evaluates to true
 }
 \examples{
 \dontrun{
@@ -18,5 +18,9 @@ assertTrue(is.numeric(2019))
 }
 }
 \seealso{
-\code{\link{isTrue}}
+\itemize{
+\item \code{\link{assertThat}}
+\item \code{\link{assertFalse}}
+\item \code{\link{isTrue}}
+}
 }

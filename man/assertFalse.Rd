@@ -2,15 +2,15 @@
 % Please edit documentation in R/hamcrest.R
 \name{assertFalse}
 \alias{assertFalse}
-\title{Is the matched assertion false?}
+\title{Assert that the value evaluates to false}
 \usage{
 assertFalse(value)
 }
 \arguments{
-\item{value}{a vector.}
+\item{value}{a vector with any length.}
 }
 \description{
-Is the matched assertion false?
+Assert that the value evaluates to false
 }
 \examples{
 \dontrun{
@@ -18,5 +18,7 @@ assertFalse(is.character(1L))
 }
 }
 \seealso{
+\code{\link{assertThat}}\cr
+\code{\link{assertTrue}}\cr
 \code{\link{isFalse}}
 }

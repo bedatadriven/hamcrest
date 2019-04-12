@@ -14,3 +14,8 @@ emitsWarning
 assertThat(any(range(2.0,3.0)), emitsWarning())
 }
 }
+\seealso{
+\itemize{
+\item \code{\link{throwsError}}
+}
+}

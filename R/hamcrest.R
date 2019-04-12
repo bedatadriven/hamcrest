@@ -20,8 +20,7 @@
 #' strings.
 #' \item \code{assertThat(actual, closeTo(expected, delta))} checks that
 #' \code{actual} is \emph{close to} \code{expected} with a maximum allowed
-#' difference of \code{delta}. The \code{closeTo()} matcher function can only be
-#' used for numeric arguments.
+#' difference of \code{delta}.
 #' \item \code{assertThat(actual, identicalTo(expected))} checks if
 #' \code{actual} is \emph{identical} to (using the \code{\link{identical}}
 #' function) \code{expected}.
@@ -34,7 +33,7 @@
 #' \item \code{assertThat(actual, instanceOf(expected))} checks if \code{actual}
 #' has class (using the \code{\link{inherits}} function) \code{expected}.
 #' }
-#' 
+#'
 #' @examples \dontrun{
 #' assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
 #' assertThat(floor(-1.5), identicalTo(-2))
@@ -45,30 +44,35 @@
 #' assertThat(any(range(2.0,3.0)), emitsWarning())
 #' assertThat(1, not(identicalTo(2)))
 #' }
-#'
 #' @export
 assertThat <- function(actual, matcher) {
-  
+
   call <- match.call()
-  
+
   matches <- tryCatch( matcher(actual), error = function(e) {
     stop(sprintf("\nassertThat(%s, %s) failed\nError: %s",
                  deparse0(call$actual), deparse0(call$matcher), deparse0(e$message)))
   })
-  
+
   if(!matches) {
-    stop(sprintf("\nassertThat(%s, %s) failed\nGot: %s", 
+    stop(sprintf("\nassertThat(%s, %s) failed\nGot: %s",
                  deparse0(call$actual), deparse0(call$matcher), deparse0(actual)))
   }
 }
 
-#' Is the matched assertion true?
+#' Assert that the value evaluates to true
 #'
-#' @param value a vector.
+#' @param value a vector with any length.
+#'
 #' @examples \dontrun{
 #' assertTrue(is.numeric(2019))
 #' }
-#' @seealso \code{\link{isTrue}}
+#' @seealso
+#' \itemize{
+#' \item \code{\link{assertThat}}
+#' \item \code{\link{assertFalse}}
+#' \item \code{\link{isTrue}}
+#' }
 #' @export
 assertTrue <- function(value) {
 
@@ -80,13 +84,17 @@ assertTrue <- function(value) {
 	}
 }
 
-#' Is the matched assertion false?
+#' Assert that the value evaluates to false
 #'
-#' @param value a vector.
+#' @param value a vector with any length.
+#'
 #' @examples \dontrun{
 #' assertFalse(is.character(1L))
 #' }
-#' @seealso \code{\link{isFalse}}
+#' @seealso
+#' \code{\link{assertThat}}\cr
+#' \code{\link{assertTrue}}\cr
+#' \code{\link{isFalse}}
 #' @export
 assertFalse <- function(value) {
 
@@ -102,15 +110,25 @@ assertFalse <- function(value) {
 # MATCHER FUNCTIONS
 # --------------------------------------
 
-#' How much do actual value(s) close to expected value(s)?
+#' Assert that the value is close to an expected value
 #'
-#' @param expected a numeric vector. 
+#' Returning a \emph{matcher} function which will return \code{TRUE} if its
+#' first argument is a numeric vector of length 1 whose absolute difference with
+#' expected is greater than or equal to the value of \code{delta}.
+#'
+#' @param expected a numeric vector.
 #' @param delta a numeric vector of length one that defines the maximum allowed
-#'   difference
+#'   difference.
+#' @details
+#' The \code{closeTo()} matcher function can only be used for numeric arguments.
 #' @examples \dontrun{
 #' assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
 #' }
-#' @seealso \code{\link{identicalTo}},\code{\link{equalTo}}
+#' @seealso
+#' \itemize{
+#' \item \code{\link{identicalTo}}
+#' \item \code{\link{equalTo}}
+#' }
 #' @export
 closeTo <- function(expected, delta) {
     stopifnot(is.numeric(expected) & is.numeric(delta) & length(delta) == 1L)
@@ -120,14 +138,18 @@ closeTo <- function(expected, delta) {
 	}
 }
 
-#' Is actual value identical to expected value?
+#' Assert that the value is identical to an expected value
 #'
 #' @param expected object passed to the matcher function.
 #' @param tol numeric tolerance.
 #' @examples \dontrun{
 #' assertThat(floor(-1.5), identicalTo(-2))
 #' }
-#' @seealso \code{\link{closeTo}},\code{\link{equalTo}}
+#' @seealso
+#' \itemize{
+#' \item \code{\link{closeTo}}
+#' \item \code{\link{equalTo}}
+#' }
 #' @export
 identicalTo <- function(expected, tol = NULL) {
 	tolMissing <- missing(tol)
@@ -136,13 +158,17 @@ identicalTo <- function(expected, tol = NULL) {
 	}
 }
 
-#' Is actual value equal to expected value?
+#' Assert that the value is equal to an expected value
 #'
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
 #' assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
 #' }
-#' \code{\link{identicalTo}},\code{\link{closeTo}}
+#' @seealso
+#' \itemize{
+#' \item \code{\link{identicalTo}}
+#' \item \code{\link{closeTo}}
+#' }
 #' @export
 equalTo <- function(expected) {
   function(actual) {
@@ -153,7 +179,9 @@ equalTo <- function(expected) {
   }
 }
 
-#' deparsesTo
+#' Assert that the value deparses to an expected value
+#'
+#' Deparsing transforms unevaluated expressions into character vectors.
 #'
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
@@ -166,7 +194,11 @@ deparsesTo <- function(expected) {
     }
 }
 
-#' instanceOf
+#' Assert that the value is instance of an expected value
+#'
+#' The expected value checks where the class name of the actual object is
+#' inherited. This is about checking S3 and S4 classes and the call uses the
+#' base function \code{\link{inherits}}.
 #'
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
@@ -174,7 +206,7 @@ deparsesTo <- function(expected) {
 #' y = c(1, 2, 3, 4, 5, 6, 7))
 #' res <- by(df$y, df$x, sum)
 #' assertThat(res, instanceOf("by"))
-#' 
+#'
 #' class(df) <- "result"
 #' assertThat(df, instanceOf("result"))
 #' }
@@ -190,7 +222,12 @@ instanceOf <- function(expected) {
 #' @examples \dontrun{
 #' assertThat(is.integer(1L), isTrue())
 #' }
-#' @seealso \code{\link{assertTrue}}
+#' @seealso
+#' \itemize{
+#' \item \code{\link{assertTrue}}
+#' \item \code{\link{assertFalse}}
+#' \item \code{\link{isFalse}}
+#' }
 #' @export
 isTrue <- function() {
     function(actual) {
@@ -203,7 +240,12 @@ isTrue <- function() {
 #' @examples \dontrun{
 #' assertThat(is.character(seq(10)), isFalse())
 #' }
-#' @seealso \code{\link{assertFalse}}
+#' @seealso
+#' \itemize{
+#' \item \code{\link{assertTrue}}
+#' \item \code{\link{assertFalse}}
+#' \item \code{\link{isTrue}}
+#' }
 #' @export
 isFalse <- function() {
     function(actual) {
@@ -212,9 +254,13 @@ isFalse <- function() {
 }
 
 #' throwsError
-#' 
+#'
 #' @examples \dontrun{
 #' assertThat(log("a"), throwsError())
+#' }
+#' @seealso
+#' \itemize{
+#' \item \code{\link{emitsWarning}}
 #' }
 #' @export
 throwsError <- function() {
@@ -228,6 +274,10 @@ throwsError <- function() {
 #'
 #' @examples \dontrun{
 #' assertThat(any(range(2.0,3.0)), emitsWarning())
+#' }
+#' @seealso
+#' \itemize{
+#' \item \code{\link{throwsError}}
 #' }
 #' @export
 emitsWarning <- function() {

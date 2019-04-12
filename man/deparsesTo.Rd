@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{deparsesTo}
 \alias{deparsesTo}
-\title{deparsesTo}
+\title{Assert that the value deparses to an expected value}
 \usage{
 deparsesTo(expected)
 }
@@ -10,7 +10,7 @@ deparsesTo(expected)
 \item{expected}{object passed to the matcher function.}
 }
 \description{
-deparsesTo
+Deparsing transforms unevaluated expressions into character vectors.
 }
 \examples{
 \dontrun{
