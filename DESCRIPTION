@@ -22,3 +22,7 @@ BugReports: https://github.com/bedatadriven/hamcrest/issues
 Encoding: UTF-8
 LazyData: yes
 RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
