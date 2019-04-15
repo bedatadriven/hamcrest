@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{emitsWarning}
 \alias{emitsWarning}
-\title{Assert that the actual value emits warning}
+\title{Checks if the expected value emits warning(s)}
 \usage{
 emitsWarning()
 }

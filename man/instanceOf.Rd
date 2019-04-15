@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{instanceOf}
 \alias{instanceOf}
-\title{Assert that the actual value is instance of an expected value}
+\title{Checks if the expected value is instance of a value}
 \usage{
 instanceOf(expected)
 }
@@ -10,14 +10,17 @@ instanceOf(expected)
 \item{expected}{object passed to the matcher function.}
 }
 \description{
-The expected value checks where the class name of the actual object is
-inherited. This is about checking S3 and S4 classes and the call uses the
-base function \code{\link{inherits}}.
+Checks if the value is an instance of a class. The expected value checks
+where the class name of the actual object is inherited. This is about
+checking S3 and S4 classes and the call uses the base function
+\code{\link{inherits}}.
 }
 \examples{
 \dontrun{
-df <- data.frame(x = c(1, 1, 1, 2, 2, 3, 3),
-y = c(1, 2, 3, 4, 5, 6, 7))
+res <- lm(Petal.Length ~ Petal.Width, iris)
+assertThat(res, instanceOf("lm"))
+
+df <- data.frame(x = c(1, 1, 1, 2, 2, 3, 3), y = c(1, 2, 3, 4, 5, 6, 7))
 res <- by(df$y, df$x, sum)
 assertThat(res, instanceOf("by"))
 

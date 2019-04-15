@@ -2,12 +2,12 @@
 % Please edit documentation in R/hamcrest.R
 \name{throwsError}
 \alias{throwsError}
-\title{Assert that the actual value throws error}
+\title{Checks if the expected value throws (any) error}
 \usage{
 throwsError()
 }
 \description{
-Assert that the actual value throws error
+Checks if the expected value throws (any) error
 }
 \examples{
 \dontrun{

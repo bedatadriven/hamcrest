@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{closeTo}
 \alias{closeTo}
-\title{Assert that the actual value is close to an expected value}
+\title{Checks if the expected value is close to a value within some tolerance level}
 \usage{
 closeTo(expected, delta)
 }

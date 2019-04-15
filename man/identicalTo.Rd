@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{identicalTo}
 \alias{identicalTo}
-\title{Assert that the actual value is identical to an expected value}
+\title{Checks if the expected value is identical to a value}
 \usage{
 identicalTo(expected, tol = NULL)
 }

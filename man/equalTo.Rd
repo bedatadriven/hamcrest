@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{equalTo}
 \alias{equalTo}
-\title{Assert that the actual value is equal to an expected value}
+\title{Checks if the expected value is equal to a value}
 \usage{
 equalTo(expected)
 }
@@ -16,6 +16,7 @@ is equal to the expected value.
 \examples{
 \dontrun{
 assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
+assertThat(length(rnorm(10)), equalTo(10))
 }
 }
 \seealso{
