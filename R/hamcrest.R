@@ -1,7 +1,7 @@
 
-# --------------------------------------
-# ASSERTION FUNCTION
-# --------------------------------------
+### ----------------------------------------------------------------- ###
+### ASSERTIONS ----
+### ----------------------------------------------------------------- ###
 
 #' Make a test assertion
 #'
@@ -128,11 +128,11 @@ assertFalse <- function(value) {
 	}
 }
 
-# --------------------------------------
-# MATCHER FUNCTIONS
-# --------------------------------------
+### ----------------------------------------------------------------- ###
+### MATCHERS ----
+### ----------------------------------------------------------------- ###
 
-#' Assert that the actual value is close to an expected value
+#' Checks if the expected value is close to a value within some tolerance level
 #'
 #' A \emph{matcher} function which will return \code{TRUE} if its first argument
 #' is a numeric vector of length 1 whose absolute difference with expected is
@@ -160,7 +160,7 @@ closeTo <- function(expected, delta) {
 	}
 }
 
-#' Assert that the actual value is identical to an expected value
+#' Checks if the expected value is identical to a value
 #'
 #' A \emph{matcher} function which will return \code{TRUE} if the actual value
 #' is identical to the expected value.
@@ -183,7 +183,7 @@ identicalTo <- function(expected, tol = NULL) {
 	}
 }
 
-#' Assert that the actual value is equal to an expected value
+#' Checks if the expected value is equal to a value
 #'
 #' A \emph{matcher} function which will return \code{TRUE} if the actual value
 #' is equal to the expected value.
@@ -191,6 +191,7 @@ identicalTo <- function(expected, tol = NULL) {
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
 #' assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
+#' assertThat(length(rnorm(10)), equalTo(10))
 #' }
 #' @seealso
 #' \itemize{
@@ -207,7 +208,7 @@ equalTo <- function(expected) {
   }
 }
 
-#' Assert that the actual value deparses to an expected value
+#' Checks if the expected value deparses to a value
 #'
 #' Deparsing transforms unevaluated expressions into character vectors.
 #'
@@ -222,16 +223,19 @@ deparsesTo <- function(expected) {
     }
 }
 
-#' Assert that the actual value is instance of an expected value
+#' Checks if the expected value is instance of a value
 #'
-#' The expected value checks where the class name of the actual object is
-#' inherited. This is about checking S3 and S4 classes and the call uses the
-#' base function \code{\link{inherits}}.
+#' Checks if the value is an instance of a class. The expected value checks
+#' where the class name of the actual object is inherited. This is about
+#' checking S3 and S4 classes and the call uses the base function
+#' \code{\link{inherits}}.
 #'
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
-#' df <- data.frame(x = c(1, 1, 1, 2, 2, 3, 3),
-#' y = c(1, 2, 3, 4, 5, 6, 7))
+#' res <- lm(Petal.Length ~ Petal.Width, iris)
+#' assertThat(res, instanceOf("lm"))
+#'
+#' df <- data.frame(x = c(1, 1, 1, 2, 2, 3, 3), y = c(1, 2, 3, 4, 5, 6, 7))
 #' res <- by(df$y, df$x, sum)
 #' assertThat(res, instanceOf("by"))
 #'
@@ -245,7 +249,7 @@ instanceOf <- function(expected) {
     }
 }
 
-#' Assert that the actual value is true
+#' Checks if the expected value is true
 #'
 #' @examples \dontrun{
 #' assertThat(is.integer(1L), isTrue())
@@ -263,7 +267,7 @@ isTrue <- function() {
     }
 }
 
-#' Assert that the actual value is false
+#' Checks if the expected value is false
 #'
 #' @examples \dontrun{
 #' assertThat(is.character(seq(10)), isFalse())
@@ -281,7 +285,7 @@ isFalse <- function() {
     }
 }
 
-#' Assert that the actual value throws error
+#' Checks if the expected value throws (any) error
 #'
 #' @examples \dontrun{
 #' assertThat(log("a"), throwsError())
@@ -298,7 +302,7 @@ throwsError <- function() {
 	}
 }
 
-#' Assert that the actual value emits warning
+#' Checks if the expected value emits warning(s)
 #'
 #' A \emph{matcher} function which will return \code{TRUE} if the actual value
 #' is identical to the expected value.
@@ -318,7 +322,11 @@ emitsWarning <- function() {
 	}
 }
 
-#' Assert that the actual value not exists
+### ----------------------------------------------------------------- ###
+### OTHERS ----
+### ----------------------------------------------------------------- ###
+
+#' Negates the result of a matcher call
 #'
 #' @param matcher one of the matcher functions, see Details of
 #'   \code{\link{assertThat}}.
