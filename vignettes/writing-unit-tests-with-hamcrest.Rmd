@@ -10,16 +10,12 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 ```
 
 ## Introduction
 
-This vignette explains how to write unit tests with *hamcrest*[^1] package.
+This vignette briefly explains how to write unit tests with *hamcrest*[^1] package.
 
 The structure of a test consists of two parts:
 
@@ -41,11 +37,13 @@ The common structure of assertThat as follows:
 assertThat({{actual}}, `matcherFun`({{expected}}))
 ```
 
-where,
+where
 
 + `actual`: actual object to be matched
-+ `expected`: expected object to match.
-+ `matcherFun`: A matcher function to check the result against the actual object.
+
++ `expected`: expected object to match
+
++ `matcherFun`: A matcher function to check the result against the actual object
 
 See `Matchers` section below for available matcher calls.
 
@@ -59,47 +57,73 @@ hamcrest comes with a set of useful matchers.
 
 #### closeTo
 
+Checks if the expected value is close to a value within some tolerance level
+
 ```{r}
 assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
 ```
 
 #### equalTo
+
+Checks if the expected value is equal to a value
+
 ```{r}
 assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
 ```
 
 #### identicalTo
+
+Checks if the expected value is identical to a value
+
 ```{r}
 assertThat(floor(-1.5), identicalTo(-2))
 ```
 
 #### isTrue
+
+Checks if the expected value is true
+
 ```{r}
 assertThat(is.integer(1L), isTrue())
 ```
 
 #### isFalse
+
+Checks if the expected value is false
+
 ```{r}
 assertThat(is.character(seq(10)), isFalse())
 ```
 
 #### instanceOf
+
+Checks if the expected value is instance of a value
+
 ```{r}
 res <- lm(Petal.Length ~ Petal.Width, iris)
 assertThat(res, instanceOf("lm"))
 ```
 
 #### deparsesTo
+
+Checks if the expected value deparses to a value
+
 ```{r}
 assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo("sin(3.14)"))
 ```
 
 #### emitsWarning
+
+Checks if the expected value emits warning(s)
+
 ```{r}
 assertThat(any(range(2.0,3.0)), emitsWarning())
 ```
 
 #### throwsError
+
+Checks if the expected value throws (any) error
+
 ```{r}
 assertThat(log("a"), throwsError())
 ```
