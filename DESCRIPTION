@@ -7,8 +7,8 @@ Description: The Hamcrest framework for writing unit tests is based on an
     provides a small set of matcher objects in the form of functions. The
     functionality provided by this set of matcher objects is identical to those
     implemented in Renjin, the R interpreter for the Java Virtual Machine
-    <www.renjin.org>. The goal of this package is therefore to be able to run
-    Renjin's unit tests written in R through the GNU R interpreter.
+    <www.renjin.org>. One of the goal of this package is therefore to be able to
+    run Renjin's unit tests written in R through the GNU R interpreter.
 License: file LICENSE
 Authors@R: c(
     person("Maarten-Jan", "Kallen", , "mj@bedatadriven.com", c("aut", "cre"), comment = c(ORCID = "0000-0002-1839-5333")),
