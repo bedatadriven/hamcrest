@@ -28,7 +28,7 @@ test.assertCloseTo <- function() {
 # identicalTo -------------------------------------------------------------
 test.assertIdenticalTo <- function() {
   assertThat(floor(-1.5), identicalTo(-2))
-  assertThat(length(NULL), identicalTo(0))
+  assertThat(length(NULL), identicalTo(0L))
   L <- list(0, 1, 2)
   assertThat(deparse(L), identicalTo("list(0, 1, 2)"))
 }

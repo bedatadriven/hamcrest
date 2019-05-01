@@ -14,9 +14,9 @@ a small set of matcher objects in the form of functions.
 \details{
 The functionality provided by this set of matcher objects is identical to
 those implemented in \href{http://www.renjin.org}{Renjin}, the R interpreter
-for the JVM (Java Virtual Machine). The goal of this package is therefore to
-be able to run Renjin's unit tests written in R through the GNU R
-interpreter.
+for the JVM (Java Virtual Machine). One of the goal of this package is
+therefore to be able to run Renjin's unit tests written in R through the GNU
+R interpreter.
 }
 \seealso{
 Useful links:
