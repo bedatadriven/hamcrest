@@ -1,6 +1,6 @@
 # hamcrest
 
-[![CRAN status badge](https://www.r-pkg.org/badges/version/hamcrest)](https://cran.r-project.org/package=hamcrest)
+[![CRAN status badge](https://www.r-pkg.org/badges/version/hamcrest)](https://cran.r-project.org/package=hamcrest) [![Dependencies](https://tinyverse.netlify.com/badge/hamcrest)](https://cran.r-project.org/package=hamcrest)
 
 GNU R package implementing the Hamcrest framework for writing unit tests.
 
