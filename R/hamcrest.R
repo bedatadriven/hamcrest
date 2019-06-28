@@ -352,3 +352,21 @@ not <- function(matcher) {
 	}
 }
 
+#' A testing suite for hamcrest tests
+#'
+#' The tests put in this suite will be evaluated in a local environment. It is
+#' suitable to run hamcrest tests without being bothered by the global
+#' namespace.
+#'
+#' @param note an explanatory text for the tests.
+#' @param ... hamcrest assertions.
+#'
+#' @export
+test_hamcrest <- function(note, ...) {
+  stopifnot(is.character(note) && length(note) == 1L)
+  message(sprintf("Testing '%s' ...", note))
+  dots <- list(...)
+  invisible(local(dots))
+  message("Success!")
+}
+
