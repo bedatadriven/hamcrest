@@ -6,20 +6,21 @@ GNU R package implementing the Hamcrest framework for writing unit tests.
 
 ## Installation
 
-<!--You can install the released version of *hamcrest* from [CRAN](https://cran.r-project.org/package=hamcrest) with:
+You can install the released version of *hamcrest* from
+[CRAN](https://cran.r-project.org/package=hamcrest) with:
 
 ```r
 install.packages("hamcrest")
 ```
--->
+
 You can install the development version:
 ```r
 # install.packages("devtools")
 devtools::install_github("bedatadriven/hamcrest")
 ```
 
-From source:
-```r
+You can install the development version from the source:
+```bash
 git clone https://github.com/bedatadriven/hamcrest.git && \
   cd hamcrest && \
   R CMD INSTALL .
