@@ -2,7 +2,7 @@
 % Please edit documentation in R/hamcrest.R
 \name{not}
 \alias{not}
-\title{Negates the result of a matcher call}
+\title{Negates the result of a matcher function}
 \usage{
 not(matcher)
 }
@@ -11,7 +11,7 @@ not(matcher)
 \code{\link{assertThat}}.}
 }
 \description{
-Negates the result of a matcher call
+Negates the result of a matcher function
 }
 \examples{
 \dontrun{

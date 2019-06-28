@@ -2,7 +2,8 @@
 % Please edit documentation in R/hamcrest.R
 \name{closeTo}
 \alias{closeTo}
-\title{Checks if the expected value is close to a value within some tolerance level}
+\title{Returns a function that checks if its \emph{argument} is close to an
+\emph{expected} result within the given tolerance}
 \usage{
 closeTo(expected, delta)
 }

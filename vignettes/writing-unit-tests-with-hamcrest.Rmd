@@ -49,7 +49,7 @@ where
 
 See `Matchers` section below for available matcher calls.
 
-There are also less central assertations such as `assertTrue` and `assertFalse`
+There are also less central assertions such as `assertTrue` and `assertFalse`
 exists, and they can be used as a shortcut for `assertThat(expected, isTrue())`
 and `assertThat(expected, isFalse())` respectively.
 

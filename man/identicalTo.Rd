@@ -2,7 +2,8 @@
 % Please edit documentation in R/hamcrest.R
 \name{identicalTo}
 \alias{identicalTo}
-\title{Checks if the expected value is identical to a value}
+\title{Returns a function that checks whether its \emph{argument} is identical to an
+\emph{expected} result}
 \usage{
 identicalTo(expected, tol = NULL)
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/hamcrest.R
 \name{equalTo}
 \alias{equalTo}
-\title{Checks if the expected value is equal to a value}
+\title{Returns a function that checks whether its \emph{argument} is equal to an
+\emph{expected} result}
 \usage{
 equalTo(expected)
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/hamcrest.R
 \name{deparsesTo}
 \alias{deparsesTo}
-\title{Checks if the expected value deparses to a value}
+\title{Returns a function that checks whether its \emph{argument} deparses to an
+expected \emph{result}}
 \usage{
 deparsesTo(expected)
 }

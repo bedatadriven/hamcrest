@@ -23,24 +23,30 @@ function. Matcher function returns a function which references the
 matcher function.
 
 \itemize{
+
 \item \code{assertThat(actual, equalTo(expected))} checks that \code{actual}
 is equal to (using the \code{==} comparison operator) \code{expected}. The
 \code{equalTo()} matcher function can therefore also be used to compare
 strings.
+
 \item \code{assertThat(actual, closeTo(expected, delta))} checks that
 \code{actual} is \emph{close to} \code{expected} with a maximum allowed
 difference of \code{delta}.
+
 \item \code{assertThat(actual, identicalTo(expected))} checks if
 \code{actual} is \emph{identical} to (using the \code{\link{identical}}
 function) \code{expected}.
+
 \item \code{assertThat(actual, isTrue())} and its shorthand
 \code{assertTrue(value)} check that \code{actual} or \code{value} is
 identical to \code{TRUE} (i.e. the logical vector or length 1). This is the
 same as \code{assertThat(actual, identicalTo(TRUE))}. Use
 \code{assertThat(actual, isFalse())} or \code{assertFalse(value)} to check if
 \code{actual} or \code{value} are \code{FALSE}.
+
 \item \code{assertThat(actual, instanceOf(expected))} checks if \code{actual}
 has class (using the \code{\link{inherits}} function) \code{expected}.
+
 }
 }
 \examples{

@@ -2,12 +2,12 @@
 % Please edit documentation in R/hamcrest.R
 \name{isTrue}
 \alias{isTrue}
-\title{Checks if the expected value is true}
+\title{Returns a function that checks whether the actual value is 'TRUE'}
 \usage{
 isTrue()
 }
 \description{
-Checks if the expected value is true
+Returns a function that checks whether the actual value is 'TRUE'
 }
 \examples{
 \dontrun{

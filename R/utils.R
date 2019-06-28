@@ -47,23 +47,24 @@ identical.rec <- function(actual, expected, tol = NULL) {
 
 
 equal.rec <- function(actual, expected) {
-  if (is.list(actual)) {                                                                              
+  if (is.list(actual)) {
     for (i in seq_along(actual)) {
       isSame <- equal.rec(actual[[i]], expected[[i]])
-      if (!isSame){                                              
-        return(FALSE)                                                                                
-      }                                                                              
-    }                                                                                            
+      if (!isSame){
+        return(FALSE)
+      }
+    }
   } else {
     return(length(actual) == length(expected) && all(actual == expected))
-  }                          
-}  
+  }
+}
 
 compareReal <- function(actual, expected, tol) {
   rel.diff <- abs(expected - actual) / abs(expected)
   finite <- is.finite(rel.diff) & expected != 0
   finiteValuesCloseEnough <- all(rel.diff[finite] < tol)
   nonFiniteValuesIdentical <- identical(expected[!finite], actual[!finite])
-  
+
   return( finiteValuesCloseEnough && nonFiniteValuesIdentical )
 }
+

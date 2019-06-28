@@ -2,7 +2,8 @@
 % Please edit documentation in R/hamcrest.R
 \name{instanceOf}
 \alias{instanceOf}
-\title{Checks if the expected value is instance of a value}
+\title{Returns a function that checks whether its \code{argument} is instance of an
+\emph{expected} result}
 \usage{
 instanceOf(expected)
 }
