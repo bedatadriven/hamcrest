@@ -20,8 +20,9 @@ devtools::install_github("bedatadriven/hamcrest")
 
 From source:
 ```r
-git clone https://github.com/bedatadriven/hamcrest.git
-R CMD INSTALL hamcrest
+git clone https://github.com/bedatadriven/hamcrest.git && \
+  cd hamcrest && \
+  R CMD INSTALL .
 ```
 
 ## Usage
@@ -42,3 +43,4 @@ for the R language. See www.renjin.org for more details.
 
 The source code in this package is released under the Apache License version
 2.0. See the LICENSE file for the full license.
+
