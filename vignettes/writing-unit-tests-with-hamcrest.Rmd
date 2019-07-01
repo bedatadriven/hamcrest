@@ -186,6 +186,38 @@ test_hamcrest("test numbers", {
 When you call `R CMD check .` in the package directory, all tests will be
 automatically run along with the other checks.
 
+## Writing custom matchers
+
+It is very possible to extend hamcrest by adding new assertions and matchers.
+For instance;
+
+You can write a custom matcher like this:
+
+```{r}
+isDate <- function() {
+  function(actual) {
+        inherits(actual, "Date")
+    }
+}
+assertThat(Sys.Date(), isDate())
+```
+
+Write a custom assertion (to make it more modular, we write the matcher separately):
+
+```{r}
+isEvenInteger <- function() {
+  function(actual) {
+    actual %% 2L == 0L
+  }
+}
+
+assertEvenInteger <- function(value) {
+  if(!assertThat(value, isEvenInteger())) {
+    throw_assert_error(value)
+  }
+}
+```
+
 ## Hamcrest in Renjin
 
 For more information about how **Renjin** uses *hamcrest* to write unit tests,
