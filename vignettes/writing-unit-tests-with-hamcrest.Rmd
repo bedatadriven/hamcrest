@@ -188,7 +188,7 @@ automatically run along with the other checks.
 
 ## Writing custom matchers
 
-It is very possible to extend hamcrest by adding new assertions and matchers.
+It is very possible to extend hamcrest by adding new matcher generators.
 For instance;
 
 You can write a custom matcher like this:
@@ -202,7 +202,7 @@ isDate <- function() {
 assertThat(Sys.Date(), isDate())
 ```
 
-Write a custom assertion (to make it more modular, we write the matcher separately):
+Or like this:
 
 ```{r}
 isEvenInteger <- function() {
@@ -210,12 +210,7 @@ isEvenInteger <- function() {
     actual %% 2L == 0L
   }
 }
-
-assertEvenInteger <- function(value) {
-  if(!assertThat(value, isEvenInteger())) {
-    throw_assert_error(value)
-  }
-}
+assertThat(round(pi), isEvenInteger())
 ```
 
 ## Hamcrest in Renjin
