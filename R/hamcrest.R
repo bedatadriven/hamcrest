@@ -100,7 +100,7 @@ assertTrue <- function(value) {
 	call <- match.call()
 
 	if(!identical(value, TRUE)) {
-	  throw_assert_error(value)
+	  stopcall(value)
 	}
 }
 
@@ -130,7 +130,7 @@ assertFalse <- function(value) {
 	call <- match.call()
 
 	if(!identical(value, FALSE)) {
-	  throw_assert_error(value)
+	  stopcall(value)
 	}
 }
 
