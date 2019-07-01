@@ -68,3 +68,17 @@ compareReal <- function(actual, expected, tol) {
   return( finiteValuesCloseEnough && nonFiniteValuesIdentical )
 }
 
+#' Throw assert error used when writing custom assertions
+#'
+#' @param value a vector with any length.
+#' @export
+throw_assert_error <- function(value) {
+  call <- sys.calls()[[1L]]
+  stop(sprintf(
+    "\n%s(%s) failed\nGot: %s",
+    deparse(call[[1L]]),
+    deparse0(call[[2L]]),
+    deparse0(value)
+  ), call. = FALSE)
+}
+

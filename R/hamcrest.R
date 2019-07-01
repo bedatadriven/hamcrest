@@ -100,8 +100,7 @@ assertTrue <- function(value) {
 	call <- match.call()
 
 	if(!identical(value, TRUE)) {
-		stop(sprintf("\nassertTrue(%s) failed\nGot: %s",
-				deparse0(call$value), deparse0(value)))
+	  throw_assert_error(value)
 	}
 }
 
@@ -131,8 +130,7 @@ assertFalse <- function(value) {
 	call <- match.call()
 
 	if(!identical(value, FALSE)) {
-		stop(sprintf("\nassertFalse(%s) failed\nGot: %s",
-				deparse0(call$value), deparse0(value)))
+	  throw_assert_error(value)
 	}
 }
 
