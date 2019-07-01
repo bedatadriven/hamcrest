@@ -69,6 +69,8 @@ assertThat <- function(actual, matcher) {
     stop(sprintf("\nassertThat(%s, %s) failed\nGot: %s",
                  deparse0(call$actual), deparse0(call$matcher), deparse0(actual)))
   }
+
+  invisible(TRUE)
 }
 
 #' Assert that the value evaluates to true
