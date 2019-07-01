@@ -62,3 +62,37 @@ test_hamcrest("assertThat emitsWarning", {
 test_hamcrest("assertThat not", {
   assertThat(1, not(identicalTo(2)))
 })
+
+test_hamcrest("custom matchers", {
+
+  isDate <- function() {
+    function(actual) {
+      inherits(actual, "Date")
+    }
+  }
+
+  assertThat(Sys.Date(), isDate())
+  assertThat(assertThat(c("A", "B", "C"), isDate()), throwsError())
+
+})
+
+test_hamcrest("custom assertions", {
+
+  isEvenInteger <- function() {
+    function(actual) {
+      actual %% 2L == 0L
+    }
+  }
+
+  assertEvenInteger <- function(value) {
+    if(!assertThat(value, isEvenInteger())) {
+      throw_assert_error(value)
+    }
+  }
+
+  assertEvenInteger(4)
+  assertThat(assertEvenInteger(5), throwsError())
+  assertThat(assertEvenInteger("a"), throwsError())
+
+})
+
