@@ -13,7 +13,7 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE, error = TRUE)
 ```
 
 ## Introduction
@@ -39,139 +39,62 @@ with *hamcrest* package for your package or project.
 
 The structure of a test consists of two parts:
 
-+ Assertion
+### 1. Assertion
 
-+ Matcher
-
-### Assertion
-
-#### assertThat
-
-The common structure of assertThat as follows:
+The common structure for the `assertThat()` is as follows:
 ```{r}
 assertThat({{actual}}, `matcherFun`({{expected}}))
 ```
 
 where
 
-+ `actual`: actual object to be matched
++ `actual`: the actual object to be matched
 
-+ `expected`: expected object to match
++ `expected`: the expected object to match
 
 + `matcherFun`: A matcher function to check the result against the actual object
 
-See `Matchers` section below for available matcher calls.
+See `Matchers` section below for the available matcher calls.
 
-There are also less central assertions such as `assertTrue` and `assertFalse`
-exists, and they can be used as a shortcut for `assertThat(expected, isTrue())`
-and `assertThat(expected, isFalse())` respectively.
+There are also secondary assertions such as `assertTrue()` and `assertFalse()`.
+They can be used as a shortcut for `assertThat(expected, isTrue())` and
+`assertThat(expected, isFalse())` respectively.
 
-### Matcher
+### 2. Matchers
 
-hamcrest comes with a set of useful matchers.
+hamcrest comes with a set of useful matcher functions.
 
-#### closeTo
-
-Checks if the expected value is close to a value within some tolerance level
-
-```{r}
-assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))
-```
-
-#### equalTo
-
-Checks if the expected value is equal to a value
-
-```{r}
-assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
-```
-
-#### identicalTo
-
-Checks if the expected value is identical to a value
-
-```{r}
-assertThat(floor(-1.5), identicalTo(-2))
-```
-
-#### isTrue
-
-Checks if the expected value is true
-
-```{r}
-assertThat(is.integer(1L), isTrue())
-```
-
-#### isFalse
-
-Checks if the expected value is false
-
-```{r}
-assertThat(is.character(seq(10)), isFalse())
-```
-
-#### instanceOf
-
-Checks if the expected value is instance of a value
-
-```{r}
-res <- lm(Petal.Length ~ Petal.Width, iris)
-assertThat(res, instanceOf("lm"))
-```
-
-#### deparsesTo
-
-Checks if the expected value deparses to a value
-
-```{r}
-assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo("sin(3.14)"))
-```
-
-#### emitsWarning
-
-Checks if the expected value emits warning(s)
-
-```{r}
-assertThat(any(range(2.0,3.0)), emitsWarning())
-```
-
-#### throwsError
-
-Checks if the expected value throws (any) error
-
-```{r}
-assertThat(log("a"), throwsError())
-```
-
-### Other methods
-
-#### not
-
-`not` is a logical method negates the result of matcher function. It can only be
-used with the matcher function.
-
-```{r}
-assertThat(1, not(identicalTo(2)))
-```
+| Matcher function | Returns a function that checks whether ... | Example |
+|:---|:---|:---|
+| `closeTo()` | its argument *is close to* an expected result within a given tolerance | `assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))` |
+| `equalTo()` | its argument *is equal to* an expected result | `assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))` |
+| `identicalTo()` | its argument *is identical to* an expected result | `assertThat(floor(-1.5), identicalTo(-2))` |
+| `isTrue()` | its argument is '*true*' | `assertThat(is.integer(1L), isTrue())` |
+| `isFalse()` | its argument is '*false*' | `assertThat(is.character(seq(10)), isFalse())` |
+| `instanceOf()` | its argument *is instance of* an expected result | `assertThat(lm(mpg ~ cyl, mtcars), instanceOf("lm"))` |
+| `deparsesTo()` | its argument *deparses to* an expected result | `assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo("sin(3.14)"))`
+| `emitsWarning()` | its argument *emits warning(s)* | `assertThat(any(range(2.0,3.0)), emitsWarning())`
+| `throwsError()` | its argument *throws (any) error* | `assertThat(log("a"), throwsError())`
+| `not()` | It is a logical method *negates* the result of matcher function. It can only be used together with a matcher function. | `assertThat(1, not(identicalTo(2)))` |
 
 ## Using hamcrest in packages
 
 The easiest way to use `hamcrest` in your package is to create test files in the
-`tests` folder where you keep all your *hamcrest* tests.
-
-For instance;
+`tests` folder where you keep all your *hamcrest* tests. For instance;
 
 - Create a file e.g. `validation-test.R`
 
-- Put the assertions inside the `test_hamcrest` function. This allows you to
+- Put the assertions inside the `test_hamcrest` call. This allows you to
 easily distinguish the assertions, and keep those which are related to each
-other together
+other together.
 
-- Run the tests by sourcing the file such as `
- you can put the individual tests inside the `test_hamcrest` block.
+- Run the tests by sourcing the file such as `source("tests/validation-test.R")`.
 
-```{r}
-test_hamcrest("test numbers", {
+- You can also run the individual tests inside the `test_hamcrest` block.
+
+```{r, eval=TRUE}
+library(hamcrest)
+test_hamcrest("random numbers", {
   set.seed(2019)
   num <- rnorm(5)
   assertThat(num, closeTo(c(0.738522661252181,
@@ -193,7 +116,7 @@ For instance;
 
 You can write a custom matcher like this:
 
-```{r}
+```{r, eval=TRUE}
 isDate <- function() {
   function(actual) {
         inherits(actual, "Date")
@@ -204,7 +127,7 @@ assertThat(Sys.Date(), isDate())
 
 Or like this:
 
-```{r}
+```{r, eval=TRUE}
 isEvenInteger <- function() {
   function(actual) {
     actual %% 2L == 0L
