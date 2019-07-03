@@ -2,12 +2,12 @@
 % Please edit documentation in R/hamcrest.R
 \name{isFalse}
 \alias{isFalse}
-\title{Returns a function that checks whether the actual value is 'FALSE'}
+\title{Returns a function that checks whether its \emph{argument} is 'FALSE'}
 \usage{
 isFalse()
 }
 \description{
-Returns a function that checks whether the actual value is 'FALSE'
+Returns a function that checks whether its \emph{argument} is 'FALSE'
 }
 \examples{
 \dontrun{

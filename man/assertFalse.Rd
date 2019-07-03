@@ -22,6 +22,8 @@ to \code{0} or if the result of the evaluation has any attributes.
 \examples{
 \dontrun{
 assertFalse(is.character(1L))
+## If you use an R version greater than 3.5.0, you can also use:
+assertThat(is.numeric("a"), isFALSE)
 }
 }
 \seealso{

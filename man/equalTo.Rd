@@ -11,8 +11,8 @@ equalTo(expected)
 \item{expected}{object passed to the matcher function.}
 }
 \description{
-A \emph{matcher} function which will return \code{TRUE} if the actual value
-is equal to the expected value.
+Returns a function that checks whether its \emph{argument} is equal to an
+\emph{expected} result
 }
 \examples{
 \dontrun{

@@ -3,7 +3,7 @@
 \name{deparsesTo}
 \alias{deparsesTo}
 \title{Returns a function that checks whether its \emph{argument} deparses to an
-expected \emph{result}}
+\emph{expected} result}
 \usage{
 deparsesTo(expected)
 }

@@ -22,6 +22,7 @@ to \code{0} or if the result of the evaluation has any attributes.
 \examples{
 \dontrun{
 assertTrue(is.numeric(2019))
+assertThat(is.character("orange"), isTRUE)
 }
 }
 \seealso{

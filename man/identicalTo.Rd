@@ -13,8 +13,8 @@ identicalTo(expected, tol = NULL)
 \item{tol}{numeric tolerance.}
 }
 \description{
-A \emph{matcher} function which will return \code{TRUE} if the actual value
-is identical to the expected value.
+Returns a function that checks whether its \emph{argument} is identical to an
+\emph{expected} result
 }
 \examples{
 \dontrun{

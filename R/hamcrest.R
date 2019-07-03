@@ -141,12 +141,8 @@ assertFalse <- function(value) {
 ### MATCHERS ----
 ### ----------------------------------------------------------------- ###
 
-#' Returns a function that checks if its \emph{argument} is close to an
+#' Returns a function that checks whether its \emph{argument} is close to an
 #' \emph{expected} result within the given tolerance
-#'
-#' A \emph{matcher} function which will return \code{TRUE} if its first argument
-#' is a numeric vector of length 1 whose absolute difference with expected is
-#' greater than or equal to the value of \code{delta}.
 #'
 #' @param expected a numeric vector.
 #' @param delta a numeric vector of length one that defines the maximum allowed
@@ -173,9 +169,6 @@ closeTo <- function(expected, delta) {
 #' Returns a function that checks whether its \emph{argument} is identical to an
 #' \emph{expected} result
 #'
-#' A \emph{matcher} function which will return \code{TRUE} if the actual value
-#' is identical to the expected value.
-#'
 #' @param expected object passed to the matcher function.
 #' @param tol numeric tolerance.
 #'
@@ -198,9 +191,6 @@ identicalTo <- function(expected, tol = NULL) {
 #' Returns a function that checks whether its \emph{argument} is equal to an
 #' \emph{expected} result
 #'
-#' A \emph{matcher} function which will return \code{TRUE} if the actual value
-#' is equal to the expected value.
-#'
 #' @param expected object passed to the matcher function.
 #' @examples \dontrun{
 #' assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))
@@ -222,7 +212,7 @@ equalTo <- function(expected) {
 }
 
 #' Returns a function that checks whether its \emph{argument} deparses to an
-#' expected \emph{result}
+#' \emph{expected} result
 #'
 #' Deparsing transforms unevaluated expressions into character vectors.
 #'
@@ -264,7 +254,7 @@ instanceOf <- function(expected) {
     }
 }
 
-#' Returns a function that checks whether the actual value is 'TRUE'
+#' Returns a function that checks whether its \emph{argument} is 'TRUE'
 #'
 #' @examples \dontrun{
 #' assertThat(is.integer(1L), isTrue())
@@ -282,7 +272,7 @@ isTrue <- function() {
     }
 }
 
-#' Returns a function that checks whether the actual value is 'FALSE'
+#' Returns a function that checks whether its \emph{argument} is 'FALSE'
 #'
 #' @examples \dontrun{
 #' assertThat(is.character(seq(10)), isFalse())
@@ -300,7 +290,7 @@ isFalse <- function() {
     }
 }
 
-#' Returns a function that checks whether the actual value throws (any) error
+#' Returns a function that checks whether its \emph{argument} throws (any) error
 #'
 #' @examples \dontrun{
 #' assertThat(log("a"), throwsError())
@@ -317,10 +307,7 @@ throwsError <- function() {
 	}
 }
 
-#' Returns a function that checks whether the actual value emits warning(s)
-#'
-#' A \emph{matcher} function which will return \code{TRUE} if the actual value
-#' is identical to the expected value.
+#' Returns a function that checks whether its \emph{argument} emits warning(s)
 #'
 #' @examples \dontrun{
 #' assertThat(any(range(2.0,3.0)), emitsWarning())

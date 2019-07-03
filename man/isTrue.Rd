@@ -2,12 +2,12 @@
 % Please edit documentation in R/hamcrest.R
 \name{isTrue}
 \alias{isTrue}
-\title{Returns a function that checks whether the actual value is 'TRUE'}
+\title{Returns a function that checks whether its \emph{argument} is 'TRUE'}
 \usage{
 isTrue()
 }
 \description{
-Returns a function that checks whether the actual value is 'TRUE'
+Returns a function that checks whether its \emph{argument} is 'TRUE'
 }
 \examples{
 \dontrun{
