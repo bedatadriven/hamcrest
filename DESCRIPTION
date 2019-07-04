@@ -1,5 +1,5 @@
 Package: hamcrest
-Version: 1.0.0
+Version: 0.1.0
 Title: Hamcrest framework for writing unit tests in R
 Description: The Hamcrest framework for writing unit tests is based on an
     assertion function and matcher objects. A matcher object implements a single
