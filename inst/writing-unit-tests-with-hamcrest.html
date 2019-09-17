@@ -320,14 +320,17 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p><em>hamcrest</em> is a unit test framework originally developed for Java and already implemented in more than 30 programming languages<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
-<p>Although it seems that a “yet another test runner” might be too much for <strong>R</strong>; however, this package is clearly intended for the developers who are familiar with the <em>hamcrest</em> syntax and do not prefer to bother learning a new unit testing framework such as <em>testthat</em> or <em>RUnit</em>.</p>
-<p>Historically, <em>hamcrest</em> is extensively used in <strong>Renjin</strong>, a JVM-based interpreter for <strong>R</strong>. Take a look at <a href="http://www.renjin.org" class="uri">http://www.renjin.org</a> for more details.</p>
-<p>The <strong>R</strong> version of the <em>hamcrest</em> package provides a <em>minimal</em> implementation from the original.</p>
-<p>This vignette briefly explains how to write unit tests with <em>hamcrest</em> package for your package or project.</p>
+<p>Although it seems that a “yet another test runner” might be too much for <strong>R</strong>; however, this package is clearly intended for the developers who are familiar with the <em>hamcrest</em> syntax and who <em>do not</em> prefer to bother learning a new unit testing framework such as <em>testthat</em>, <em>RUnit</em> etc.</p>
+<p>Historically, <em>hamcrest</em> is extensively used in <strong>Renjin</strong>, which is a JVM-based interpreter for <strong>R</strong>. Take a look at <a href="https://www.renjin.org" class="uri">https://www.renjin.org</a> for more details.</p>
+<p>The <strong>R</strong> version of the <em>hamcrest</em> package provides a <em>minimal</em> implementation from the original. This vignette briefly explains how to write unit tests with <em>hamcrest</em> package for your R package or project.</p>
 </div>
 <div id="testing-basics" class="section level2">
 <h2>Testing basics</h2>
-<p>The structure of a test consists of two parts:</p>
+<p>The structure of a test mainly consists of two parts:</p>
+<ol style="list-style-type: decimal">
+<li><p>Assertion</p></li>
+<li><p>Matchers</p></li>
+</ol>
 <div id="assertion" class="section level3">
 <h3>1. Assertion</h3>
 <p>The common structure for the <code>assertThat()</code> is as follows:</p>
@@ -338,12 +341,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><p><code>expected</code>: the expected object to match</p></li>
 <li><p><code>matcherFun</code>: A matcher function to check the result against the actual object</p></li>
 </ul>
-<p>See <code>Matchers</code> section below for the available matcher calls.</p>
-<p>There are also secondary assertions such as <code>assertTrue()</code> and <code>assertFalse()</code>. They can be used as a shortcut for <code>assertThat(expected, isTrue())</code> and <code>assertThat(expected, isFalse())</code> respectively.</p>
+<p>See <a href="#matchers">Matchers</a> section below for the available matcher calls.</p>
+<p>There are also <strong>secondary assertions</strong> available such as <code>assertTrue()</code> and <code>assertFalse()</code>. They can be used as a shortcut for <code>assertThat(expected, isTrue())</code> and <code>assertThat(expected, isFalse())</code> respectively.</p>
 </div>
 <div id="matchers" class="section level3">
 <h3>2. Matchers</h3>
-<p>hamcrest comes with a set of useful matcher functions.</p>
+<p><em>hamcrest</em> comes with a set of useful matcher functions that they could be used together with <a href="#assertion">Assertion</a>.</p>
 <table>
 <colgroup>
 <col width="33%"></col>
@@ -414,7 +417,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="using-hamcrest-in-packages" class="section level2">
 <h2>Using hamcrest in packages</h2>
-<p>The easiest way to use <code>hamcrest</code> in your package is to create test files in the <code>tests</code> folder where you keep all your <em>hamcrest</em> tests. For instance;</p>
+<p>The easiest way to use <em>hamcrest</em> in your package is to create test files in the <code>tests</code> folder where you keep all your <em>hamcrest</em> tests. For instance;</p>
 <ul>
 <li><p>Create a file e.g. <code>validation-test.R</code></p></li>
 <li><p>Put the assertions inside the <code>test_hamcrest</code> call. This allows you to easily distinguish the assertions, and keep those which are related to each other together.</p></li>
@@ -422,7 +425,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><p>You can also run the individual tests inside the <code>test_hamcrest</code> block.</p></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(hamcrest)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Error in library(hamcrest): there is no package called 'hamcrest'</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">test_hamcrest</span>(<span class="st">&quot;random numbers&quot;</span>, {</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">set.seed</span>(<span class="dv">2019</span>)</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">  num &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)</a>
@@ -433,28 +436,26 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb2-10" data-line-number="10">                            <span class="fl">-1.26748197407977</span>),</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">                          <span class="dt">delta =</span> <span class="fl">1e4</span>))</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">})</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; Error in test_hamcrest(&quot;random numbers&quot;, {: could not find function &quot;test_hamcrest&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; Testing 'random numbers' ...</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; Success!</span></a></code></pre></div>
 <p>When you call <code>R CMD check .</code> in the package directory, all tests will be automatically run along with the other checks.</p>
 </div>
 <div id="writing-custom-matchers" class="section level2">
 <h2>Writing custom matchers</h2>
-<p>It is very possible to extend hamcrest by adding new matcher generators. For instance;</p>
+<p>It is very possible to extend <em>hamcrest</em> by adding new matcher generators. For instance;</p>
 <p>You can write a custom matcher like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">isDate &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="cf">function</span>(actual) {</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">        <span class="kw">inherits</span>(actual, <span class="st">&quot;Date&quot;</span>)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">    }</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw">assertThat</span>(<span class="kw">Sys.Date</span>(), <span class="kw">isDate</span>())</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; Error in assertThat(Sys.Date(), isDate()): could not find function &quot;assertThat&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">isDate &lt;-<span class="st"> </span><span class="cf">function</span>(actual) {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">inherits</span>(actual, <span class="st">&quot;Date&quot;</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">assertThat</span>(<span class="kw">Sys.Date</span>(), isDate)</a></code></pre></div>
 <p>Or like this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">isEvenInteger &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="cf">function</span>(actual) {</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">    actual <span class="op">%%</span><span class="st"> </span>2L <span class="op">==</span><span class="st"> </span>0L</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  }</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">assertThat</span>(<span class="kw">round</span>(pi), <span class="kw">isEvenInteger</span>())</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Error in assertThat(round(pi), isEvenInteger()): could not find function &quot;assertThat&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">isEvenInteger &lt;-<span class="st"> </span><span class="cf">function</span>(actual) {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">   actual <span class="op">%%</span><span class="st"> </span>2L <span class="op">==</span><span class="st"> </span>0L</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">assertThat</span>(<span class="kw">round</span>(pi), isEvenInteger)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; Error in assertThat(round(pi), isEvenInteger): </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; assertThat(round(pi), isEvenInteger) failed</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Got: 3</span></a></code></pre></div>
 </div>
 <div id="hamcrest-in-renjin" class="section level2">
 <h2>Hamcrest in Renjin</h2>
@@ -463,7 +464,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Check the original hamcrest website: <a href="http://hamcrest.org/" class="uri">http://hamcrest.org/</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Check the original <em>hamcrest</em> website: <a href="http://hamcrest.org/" class="uri">http://hamcrest.org/</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 <li id="fn2"><p>Access to <strong>Renjin</strong> documentation via <a href="http://docs.renjin.org/" class="uri">http://docs.renjin.org/</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>

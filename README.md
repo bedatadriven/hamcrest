@@ -1,17 +1,8 @@
 # hamcrest
 
-[![CRAN status badge](https://www.r-pkg.org/badges/version/hamcrest)](https://cran.r-project.org/package=hamcrest) [![Dependencies](https://tinyverse.netlify.com/badge/hamcrest)](https://cran.r-project.org/package=hamcrest)
-
 GNU R package implementing the Hamcrest framework for writing unit tests.
 
 ## Installation
-
-You can install the released version of *hamcrest* from
-[CRAN](https://cran.r-project.org/package=hamcrest) with:
-
-```r
-install.packages("hamcrest")
-```
 
 You can install the development version:
 ```r
@@ -29,7 +20,7 @@ git clone https://github.com/bedatadriven/hamcrest.git && \
 ## Usage
 
 Read the
-[**vignette**](https://cran.r-project.org/web/packages/hamcrest/vignettes/writing-unit-tests-with-hamcrest.html)
+[**vignette**](https://htmlpreview.github.io/?https://github.com/bedatadriven/hamcrest/blob/overhaul-hamcrest/inst/writing-unit-tests-with-hamcrest.html)
 for more information. For more information about how **Renjin** uses *hamcrest*
 to write unit tests, please see
 [**this**](http://docs.renjin.org/en/latest/writing-renjin-extensions.html#using-the-hamcrest-package-to-write-unit-tests)

@@ -1,0 +1,11 @@
+Render the introduction vignette in the `vignettes/` directory and save to
+`inst/` folder as HTML which the link is used in the README file:
+
+```
+rmarkdown::render(
+  input = "vignettes/writing-unit-tests-with-hamcrest.Rmd",
+  output_file = "writing-unit-tests-with-hamcrest.html",
+  output_dir = "inst"
+)
+```
+
