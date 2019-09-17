@@ -5,12 +5,10 @@
 \title{Returns a function that checks whether its \emph{argument} is identical to an
 \emph{expected} result}
 \usage{
-identicalTo(expected, tol = NULL)
+identicalTo(expected)
 }
 \arguments{
 \item{expected}{object passed to the matcher function.}
-
-\item{tol}{numeric tolerance.}
 }
 \description{
 Returns a function that checks whether its \emph{argument} is identical to an

@@ -170,7 +170,6 @@ closeTo <- function(expected, delta) {
 #' \emph{expected} result
 #'
 #' @param expected object passed to the matcher function.
-#' @param tol numeric tolerance.
 #'
 #' @examples \dontrun{
 #' assertThat(floor(-1.5), identicalTo(-2))
@@ -181,10 +180,9 @@ closeTo <- function(expected, delta) {
 #' \item \code{\link{equalTo}}
 #' }
 #' @export
-identicalTo <- function(expected, tol = NULL) {
-	tolMissing <- missing(tol)
+identicalTo <- function(expected) {
 	function(actual) {
-	    identical.rec(actual, expected, tol)
+	    identical.rec(actual, expected)
 	}
 }
 
