@@ -170,7 +170,9 @@ closeTo <- function(expected, delta) {
 #' \emph{expected} result
 #'
 #' @param expected object passed to the matcher function.
-#' @param tol numeric tolerance.
+#' @param tol numeric tolerance. Should note that \code{tol} is only used if the
+#'   expected value is a finite floating point number. If the expected value is
+#'   another type, such as an integer, an exact match is expected.
 #'
 #' @examples \dontrun{
 #' assertThat(floor(-1.5), identicalTo(-2))

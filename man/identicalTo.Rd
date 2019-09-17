@@ -10,7 +10,9 @@ identicalTo(expected, tol = NULL)
 \arguments{
 \item{expected}{object passed to the matcher function.}
 
-\item{tol}{numeric tolerance.}
+\item{tol}{numeric tolerance. Should note that \code{tol} is only used if the
+expected value is a finite floating point number. If the expected value is
+another type, such as an integer, an exact match is expected.}
 }
 \description{
 Returns a function that checks whether its \emph{argument} is identical to an
