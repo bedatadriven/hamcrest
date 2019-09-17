@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="BeDataDriven B.V." />
+
+<meta name="date" content="2019-09-17" />
+
+<title>Writing unit tests with Hamcrest</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Writing unit tests with Hamcrest</h1>
+<h4 class="author">BeDataDriven B.V.</h4>
+<h4 class="date">2019-09-17</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#testing-basics">Testing basics</a></li>
+<li><a href="#using-hamcrest-in-packages">Using hamcrest in packages</a></li>
+<li><a href="#writing-custom-matchers">Writing custom matchers</a></li>
+<li><a href="#hamcrest-in-renjin">Hamcrest in Renjin</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><em>hamcrest</em> is a unit test framework originally developed for Java and already implemented in more than 30 programming languages<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>Although it seems that a “yet another test runner” might be too much for <strong>R</strong>; however, this package is clearly intended for the developers who are familiar with the <em>hamcrest</em> syntax and do not prefer to bother learning a new unit testing framework such as <em>testthat</em> or <em>RUnit</em>.</p>
+<p>Historically, <em>hamcrest</em> is extensively used in <strong>Renjin</strong>, a JVM-based interpreter for <strong>R</strong>. Take a look at <a href="http://www.renjin.org" class="uri">http://www.renjin.org</a> for more details.</p>
+<p>The <strong>R</strong> version of the <em>hamcrest</em> package provides a <em>minimal</em> implementation from the original.</p>
+<p>This vignette briefly explains how to write unit tests with <em>hamcrest</em> package for your package or project.</p>
+</div>
+<div id="testing-basics" class="section level2">
+<h2>Testing basics</h2>
+<p>The structure of a test consists of two parts:</p>
+<div id="assertion" class="section level3">
+<h3>1. Assertion</h3>
+<p>The common structure for the <code>assertThat()</code> is as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">assertThat</span>({{actual}}, <span class="st">`</span><span class="dt">matcherFun</span><span class="st">`</span>({{expected}}))</a></code></pre></div>
+<p>where</p>
+<ul>
+<li><p><code>actual</code>: the actual object to be matched</p></li>
+<li><p><code>expected</code>: the expected object to match</p></li>
+<li><p><code>matcherFun</code>: A matcher function to check the result against the actual object</p></li>
+</ul>
+<p>See <code>Matchers</code> section below for the available matcher calls.</p>
+<p>There are also secondary assertions such as <code>assertTrue()</code> and <code>assertFalse()</code>. They can be used as a shortcut for <code>assertThat(expected, isTrue())</code> and <code>assertThat(expected, isFalse())</code> respectively.</p>
+</div>
+<div id="matchers" class="section level3">
+<h3>2. Matchers</h3>
+<p>hamcrest comes with a set of useful matcher functions.</p>
+<table>
+<colgroup>
+<col width="33%"></col>
+<col width="33%"></col>
+<col width="33%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Matcher function</th>
+<th align="left">Returns a function that checks whether …</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>closeTo()</code></td>
+<td align="left">its argument <em>is close to</em> an expected result within a given tolerance</td>
+<td align="left"><code>assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>equalTo()</code></td>
+<td align="left">its argument <em>is equal to</em> an expected result</td>
+<td align="left"><code>assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>identicalTo()</code></td>
+<td align="left">its argument <em>is identical to</em> an expected result</td>
+<td align="left"><code>assertThat(floor(-1.5), identicalTo(-2))</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>isTrue()</code></td>
+<td align="left">its argument is ‘<em>true</em>’</td>
+<td align="left"><code>assertThat(is.integer(1L), isTrue())</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>isFalse()</code></td>
+<td align="left">its argument is ‘<em>false</em>’</td>
+<td align="left"><code>assertThat(is.character(seq(10)), isFalse())</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>instanceOf()</code></td>
+<td align="left">its argument <em>is instance of</em> an expected result</td>
+<td align="left"><code>assertThat(lm(mpg ~ cyl, mtcars), instanceOf(&quot;lm&quot;))</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>deparsesTo()</code></td>
+<td align="left">its argument <em>deparses to</em> an expected result</td>
+<td align="left"><code>assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo(&quot;sin(3.14)&quot;))</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>emitsWarning()</code></td>
+<td align="left">its argument <em>emits warning(s)</em></td>
+<td align="left"><code>assertThat(any(range(2.0,3.0)), emitsWarning())</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>throwsError()</code></td>
+<td align="left">its argument <em>throws (any) error</em></td>
+<td align="left"><code>assertThat(log(&quot;a&quot;), throwsError())</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>not()</code></td>
+<td align="left">It is a logical method <em>negates</em> the result of matcher function. It can only be used together with a matcher function.</td>
+<td align="left"><code>assertThat(1, not(identicalTo(2)))</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="using-hamcrest-in-packages" class="section level2">
+<h2>Using hamcrest in packages</h2>
+<p>The easiest way to use <code>hamcrest</code> in your package is to create test files in the <code>tests</code> folder where you keep all your <em>hamcrest</em> tests. For instance;</p>
+<ul>
+<li><p>Create a file e.g. <code>validation-test.R</code></p></li>
+<li><p>Put the assertions inside the <code>test_hamcrest</code> call. This allows you to easily distinguish the assertions, and keep those which are related to each other together.</p></li>
+<li><p>Run the tests by sourcing the file such as <code>source(&quot;tests/validation-test.R&quot;)</code>.</p></li>
+<li><p>You can also run the individual tests inside the <code>test_hamcrest</code> block.</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(hamcrest)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Error in library(hamcrest): there is no package called 'hamcrest'</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">test_hamcrest</span>(<span class="st">&quot;random numbers&quot;</span>, {</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">set.seed</span>(<span class="dv">2019</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  num &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw">assertThat</span>(num, <span class="kw">closeTo</span>(<span class="kw">c</span>(<span class="fl">0.738522661252181</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                            <span class="fl">-0.514760490807001</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">                            <span class="fl">-1.64018134225737</span>,</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">                            <span class="fl">0.916036784965901</span>,</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">                            <span class="fl">-1.26748197407977</span>),</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">                          <span class="dt">delta =</span> <span class="fl">1e4</span>))</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">})</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; Error in test_hamcrest(&quot;random numbers&quot;, {: could not find function &quot;test_hamcrest&quot;</span></a></code></pre></div>
+<p>When you call <code>R CMD check .</code> in the package directory, all tests will be automatically run along with the other checks.</p>
+</div>
+<div id="writing-custom-matchers" class="section level2">
+<h2>Writing custom matchers</h2>
+<p>It is very possible to extend hamcrest by adding new matcher generators. For instance;</p>
+<p>You can write a custom matcher like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">isDate &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="cf">function</span>(actual) {</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">        <span class="kw">inherits</span>(actual, <span class="st">&quot;Date&quot;</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    }</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw">assertThat</span>(<span class="kw">Sys.Date</span>(), <span class="kw">isDate</span>())</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; Error in assertThat(Sys.Date(), isDate()): could not find function &quot;assertThat&quot;</span></a></code></pre></div>
+<p>Or like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">isEvenInteger &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="cf">function</span>(actual) {</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    actual <span class="op">%%</span><span class="st"> </span>2L <span class="op">==</span><span class="st"> </span>0L</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  }</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">assertThat</span>(<span class="kw">round</span>(pi), <span class="kw">isEvenInteger</span>())</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Error in assertThat(round(pi), isEvenInteger()): could not find function &quot;assertThat&quot;</span></a></code></pre></div>
+</div>
+<div id="hamcrest-in-renjin" class="section level2">
+<h2>Hamcrest in Renjin</h2>
+<p>For more information about how <strong>Renjin</strong> uses <em>hamcrest</em> to write unit tests, please see the <a href="http://docs.renjin.org/en/latest/writing-renjin-extensions.html#using-the-hamcrest-package-to-write-unit-tests"><strong>Using the hamcrest package to write unit tests</strong></a> documentation post<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Check the original hamcrest website: <a href="http://hamcrest.org/" class="uri">http://hamcrest.org/</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Access to <strong>Renjin</strong> documentation via <a href="http://docs.renjin.org/" class="uri">http://docs.renjin.org/</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
