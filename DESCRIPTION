@@ -1,10 +1,28 @@
 Package: hamcrest
-Version: 1.0
-Date: 2014-05-22
+Version: 0.1.0
 Title: Hamcrest framework for writing unit tests in R
+Description: The Hamcrest framework for writing unit tests is based on an
+    assertion function and matcher objects. A matcher object implements a single
+    rule that is used by the assertion function to perform the test. This package
+    provides a small set of matcher objects in the form of functions. The
+    functionality provided by this set of matcher objects is identical to those
+    implemented in Renjin, the R interpreter for the Java Virtual Machine
+    <www.renjin.org>. One of the goal of this package is therefore to be able to
+    run Renjin's unit tests written in R through the GNU R interpreter.
 License: file LICENSE
-Author: Alexander Bertram and Maarten-Jan Kallen
-Maintainer: Maarten-Jan Kallen <mj@bedatadriven.com>
-Description: Write unit tests using an R implementation of the Hamcrest framework.
+Authors@R: c(
+    person("Maarten-Jan", "Kallen", , "mj@bedatadriven.com", c("aut", "cre"), comment = c(ORCID = "0000-0002-1839-5333")),
+    person("Alexander", "Bertram", role = "aut"),
+    person("Parham", "Solaimani", role = "aut", comment = c(ORCID = "0000-0001-5292-1379")),
+    person("Metin", "Yazici", role = "aut"),
+    person("BeDataDriven", role = c("cph", "fnd"))
+    )
 URL: https://github.com/bedatadriven/hamcrest
 BugReports: https://github.com/bedatadriven/hamcrest/issues
+Encoding: UTF-8
+LazyData: yes
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

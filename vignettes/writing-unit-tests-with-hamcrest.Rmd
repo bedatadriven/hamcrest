@@ -1,0 +1,151 @@
+---
+title: "Writing unit tests with Hamcrest"
+author: "BeDataDriven B.V."
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Writing unit tests with Hamcrest}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE, error = TRUE)
+```
+
+## Introduction
+
+*hamcrest* is a unit test framework originally developed for Java and already
+implemented in more than 30 programming languages[^1].
+
+Although it seems that a "yet another test runner" might be too much for **R**;
+however, this package is clearly intended for the developers who are familiar
+with the *hamcrest* syntax and who *do not* prefer to bother learning a new unit
+testing framework such as *testthat*, *RUnit* etc.
+
+Historically, *hamcrest* is extensively used in **Renjin**, which is a JVM-based
+interpreter for **R**. Take a look at <https://www.renjin.org> for more details.
+
+The **R** version of the *hamcrest* package provides a *minimal* implementation
+from the original. This vignette briefly explains how to write unit tests with
+*hamcrest* package for your R package or project.
+
+## Testing basics
+
+The structure of a test mainly consists of two parts:
+
+1. Assertion
+
+2. Matchers
+
+### 1. Assertion {#assertion}
+
+The common structure for the `assertThat()` is as follows:
+```r
+assertThat({{actual}}, `matcherFun`({{expected}}))
+```
+
+where
+
++ `actual`: the actual object to be matched
+
++ `expected`: the expected object to match
+
++ `matcherFun`: A matcher function to check the result against the actual object
+
+See [Matchers](#matchers) section below for the available matcher calls.
+
+There are also **secondary assertions** available such as
+`assertTrue()` and `assertFalse()`.
+They can be used as a shortcut for
+`assertThat(expected, isTrue())` and
+`assertThat(expected, isFalse())` respectively.
+
+### 2. Matchers {#matchers}
+
+*hamcrest* comes with a set of useful matcher functions that they could be used
+together with [Assertion](#assertion).
+
+| Matcher function | Returns a function that checks whether ... | Example |
+|:---|:---|:---|
+| `closeTo()` | its argument *is close to* an expected result within a given tolerance | `assertThat(-0.50557992900139, closeTo(-0.50557, delta = 1e4))` |
+| `equalTo()` | its argument *is equal to* an expected result | `assertThat(qnorm(0, 0, 1, TRUE, FALSE), equalTo(-Inf))` |
+| `identicalTo()` | its argument *is identical to* an expected result | `assertThat(floor(-1.5), identicalTo(-2))` |
+| `isTrue()` | its argument is '*true*' | `assertThat(is.integer(1L), isTrue())` |
+| `isFalse()` | its argument is '*false*' | `assertThat(is.character(seq(10)), isFalse())` |
+| `instanceOf()` | its argument *is instance of* an expected result | `assertThat(lm(mpg ~ cyl, mtcars), instanceOf("lm"))` |
+| `deparsesTo()` | its argument *deparses to* an expected result | `assertThat(unlist(quote(sin(3.14)), recursive = FALSE), deparsesTo("sin(3.14)"))`
+| `emitsWarning()` | its argument *emits warning(s)* | `assertThat(any(range(2.0,3.0)), emitsWarning())`
+| `throwsError()` | its argument *throws (any) error* | `assertThat(log("a"), throwsError())`
+| `not()` | It is a logical method *negates* the result of matcher function. It can only be used together with a matcher function. | `assertThat(1, not(identicalTo(2)))` |
+
+## Using hamcrest in packages
+
+The easiest way to use *hamcrest* in your package is to create test files in the
+`tests` folder where you keep all your *hamcrest* tests. For instance;
+
+- Create a file e.g. `validation-test.R`
+
+- Put the assertions inside the `testHamcrest` call. This allows you to
+easily distinguish the assertions, and keep those which are related to each
+other together.
+
+- Run the tests by sourcing the file such as `source("tests/validation-test.R")`.
+
+- You can also run the individual tests inside the `testHamcrest` block.
+
+```{r, eval=TRUE}
+library(hamcrest)
+
+testHamcrest("random numbers", {
+  set.seed(2019)
+  num <- rnorm(5)
+  assertThat(num, closeTo(c(0.738522661252181,
+                            -0.514760490807001,
+                            -1.64018134225737,
+                            0.916036784965901,
+                            -1.26748197407977),
+                          delta = 1e4))
+})
+```
+
+When you call `R CMD check .` in the package directory, all tests will be
+automatically run along with the other checks.
+
+## Writing custom matchers
+
+It is very possible to extend *hamcrest* by adding new matcher generators.
+For instance;
+
+You can write a custom matcher like this:
+
+```{r, eval=TRUE}
+isDate <- function(actual) {
+  inherits(actual, "Date")
+}
+assertThat(Sys.Date(), isDate)
+```
+
+Or like this:
+
+```{r, eval=TRUE}
+isEvenInteger <- function(actual) {
+   actual %% 2L == 0L
+}
+assertThat(round(pi), isEvenInteger)
+```
+
+## Hamcrest in Renjin
+
+For more information about how **Renjin** uses *hamcrest* to write unit tests,
+please see the
+[**Using the hamcrest package to write unit tests**](http://docs.renjin.org/en/latest/writing-renjin-extensions.html#using-the-hamcrest-package-to-write-unit-tests)
+documentation post[^2].
+
+[^1]: Check the original *hamcrest* website: <http://hamcrest.org/>.
+[^2]: Access to **Renjin** documentation via <http://docs.renjin.org/>.
+
+
