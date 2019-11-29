@@ -2,7 +2,7 @@
 title: "Writing unit tests with Hamcrest"
 author: "BeDataDriven B.V."
 date: "`r Sys.Date()`"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 2
@@ -58,9 +58,9 @@ where
 
 See [Matchers](#matchers) section below for the available matcher calls.
 
-There are also **secondary assertions** available such as 
-`assertTrue()` and `assertFalse()`. 
-They can be used as a shortcut for 
+There are also **secondary assertions** available such as
+`assertTrue()` and `assertFalse()`.
+They can be used as a shortcut for
 `assertThat(expected, isTrue())` and
 `assertThat(expected, isFalse())` respectively.
 
@@ -89,18 +89,18 @@ The easiest way to use *hamcrest* in your package is to create test files in the
 
 - Create a file e.g. `validation-test.R`
 
-- Put the assertions inside the `test_hamcrest` call. This allows you to
+- Put the assertions inside the `testHamcrest` call. This allows you to
 easily distinguish the assertions, and keep those which are related to each
 other together.
 
 - Run the tests by sourcing the file such as `source("tests/validation-test.R")`.
 
-- You can also run the individual tests inside the `test_hamcrest` block.
+- You can also run the individual tests inside the `testHamcrest` block.
 
 ```{r, eval=TRUE}
 library(hamcrest)
 
-test_hamcrest("random numbers", {
+testHamcrest("random numbers", {
   set.seed(2019)
   num <- rnorm(5)
   assertThat(num, closeTo(c(0.738522661252181,
@@ -147,3 +147,5 @@ documentation post[^2].
 
 [^1]: Check the original *hamcrest* website: <http://hamcrest.org/>.
 [^2]: Access to **Renjin** documentation via <http://docs.renjin.org/>.
+
+

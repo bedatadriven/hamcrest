@@ -13,7 +13,7 @@
 
 <meta name="author" content="BeDataDriven B.V." />
 
-<meta name="date" content="2019-09-17" />
+<meta name="date" content="2019-11-29" />
 
 <title>Writing unit tests with Hamcrest</title>
 
@@ -38,7 +38,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -304,7 +304,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Writing unit tests with Hamcrest</h1>
 <h4 class="author">BeDataDriven B.V.</h4>
-<h4 class="date">2019-09-17</h4>
+<h4 class="date">2019-11-29</h4>
 
 
 <div id="TOC">
@@ -334,7 +334,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="assertion" class="section level3">
 <h3>1. Assertion</h3>
 <p>The common structure for the <code>assertThat()</code> is as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">assertThat</span>({{actual}}, <span class="st">`</span><span class="dt">matcherFun</span><span class="st">`</span>({{expected}}))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">assertThat</span>({{actual}}, <span class="st">`</span><span class="dt">matcherFun</span><span class="st">`</span>({{expected}}))</a></code></pre></div>
 <p>where</p>
 <ul>
 <li><p><code>actual</code>: the actual object to be matched</p></li>
@@ -419,43 +419,42 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h2>Using hamcrest in packages</h2>
 <p>The easiest way to use <em>hamcrest</em> in your package is to create test files in the <code>tests</code> folder where you keep all your <em>hamcrest</em> tests. For instance;</p>
 <ul>
-<li><p>Create a file e.g. <code>validation-test.R</code></p></li>
-<li><p>Put the assertions inside the <code>test_hamcrest</code> call. This allows you to easily distinguish the assertions, and keep those which are related to each other together.</p></li>
+<li><p>Create a file e.g. <code>validation-test.R</code></p></li>
+<li><p>Put the assertions inside the <code>testHamcrest</code> call. This allows you to easily distinguish the assertions, and keep those which are related to each other together.</p></li>
 <li><p>Run the tests by sourcing the file such as <code>source(&quot;tests/validation-test.R&quot;)</code>.</p></li>
-<li><p>You can also run the individual tests inside the <code>test_hamcrest</code> block.</p></li>
+<li><p>You can also run the individual tests inside the <code>testHamcrest</code> block.</p></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(hamcrest)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">test_hamcrest</span>(<span class="st">&quot;random numbers&quot;</span>, {</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">set.seed</span>(<span class="dv">2019</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  num &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw">assertThat</span>(num, <span class="kw">closeTo</span>(<span class="kw">c</span>(<span class="fl">0.738522661252181</span>,</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">                            <span class="fl">-0.514760490807001</span>,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">                            <span class="fl">-1.64018134225737</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">                            <span class="fl">0.916036784965901</span>,</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">                            <span class="fl">-1.26748197407977</span>),</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                          <span class="dt">delta =</span> <span class="fl">1e4</span>))</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">})</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; Testing 'random numbers' ...</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; Success!</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(hamcrest)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">testHamcrest</span>(<span class="st">&quot;random numbers&quot;</span>, {</a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="kw">set.seed</span>(<span class="dv">2019</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5">  num &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="kw">assertThat</span>(num, <span class="kw">closeTo</span>(<span class="kw">c</span>(<span class="fl">0.738522661252181</span>,</a>
+<a class="sourceLine" id="cb2-7" title="7">                            <span class="fl">-0.514760490807001</span>,</a>
+<a class="sourceLine" id="cb2-8" title="8">                            <span class="fl">-1.64018134225737</span>,</a>
+<a class="sourceLine" id="cb2-9" title="9">                            <span class="fl">0.916036784965901</span>,</a>
+<a class="sourceLine" id="cb2-10" title="10">                            <span class="fl">-1.26748197407977</span>),</a>
+<a class="sourceLine" id="cb2-11" title="11">                          <span class="dt">delta =</span> <span class="fl">1e4</span>))</a>
+<a class="sourceLine" id="cb2-12" title="12">})</a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; Error in testHamcrest(&quot;random numbers&quot;, {: could not find function &quot;testHamcrest&quot;</span></a></code></pre></div>
 <p>When you call <code>R CMD check .</code> in the package directory, all tests will be automatically run along with the other checks.</p>
 </div>
 <div id="writing-custom-matchers" class="section level2">
 <h2>Writing custom matchers</h2>
 <p>It is very possible to extend <em>hamcrest</em> by adding new matcher generators. For instance;</p>
 <p>You can write a custom matcher like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">isDate &lt;-<span class="st"> </span><span class="cf">function</span>(actual) {</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">inherits</span>(actual, <span class="st">&quot;Date&quot;</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">assertThat</span>(<span class="kw">Sys.Date</span>(), isDate)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">isDate &lt;-<span class="st"> </span><span class="cf">function</span>(actual) {</a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="kw">inherits</span>(actual, <span class="st">&quot;Date&quot;</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">}</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">assertThat</span>(<span class="kw">Sys.Date</span>(), isDate)</a></code></pre></div>
 <p>Or like this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">isEvenInteger &lt;-<span class="st"> </span><span class="cf">function</span>(actual) {</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">   actual <span class="op">%%</span><span class="st"> </span>2L <span class="op">==</span><span class="st"> </span>0L</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">assertThat</span>(<span class="kw">round</span>(pi), isEvenInteger)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; Error in assertThat(round(pi), isEvenInteger): </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; assertThat(round(pi), isEvenInteger) failed</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Got: 3</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">isEvenInteger &lt;-<span class="st"> </span><span class="cf">function</span>(actual) {</a>
+<a class="sourceLine" id="cb4-2" title="2">   actual <span class="op">%%</span><span class="st"> </span>2L <span class="op">==</span><span class="st"> </span>0L</a>
+<a class="sourceLine" id="cb4-3" title="3">}</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">assertThat</span>(<span class="kw">round</span>(pi), isEvenInteger)</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; Error in assertThat(round(pi), isEvenInteger): </span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; assertThat(round(pi), isEvenInteger) failed</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; Got: 3</span></a></code></pre></div>
 </div>
 <div id="hamcrest-in-renjin" class="section level2">
 <h2>Hamcrest in Renjin</h2>

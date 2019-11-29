@@ -354,7 +354,7 @@ not <- function(matcher) {
 #' @param ... hamcrest assertions.
 #'
 #' @export
-test_hamcrest <- function(note, ...) {
+testHamcrest <- function(note, ...) {
   stopifnot(is.character(note) && length(note) == 1L)
   message(sprintf("Testing '%s' ...", note))
   dots <- list(...)
