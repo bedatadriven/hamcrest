@@ -20,7 +20,7 @@ git clone https://github.com/bedatadriven/hamcrest.git && \
 ## Usage
 
 Read the
-[**vignette**](https://htmlpreview.github.io/?https://github.com/bedatadriven/hamcrest/blob/overhaul-hamcrest/inst/writing-unit-tests-with-hamcrest.html)
+[**vignette**](https://htmlpreview.github.io/?https://github.com/bedatadriven/hamcrest/blob/master/inst/writing-unit-tests-with-hamcrest.html)
 for more information. For more information about how **Renjin** uses *hamcrest*
 to write unit tests, please see
 [**this**](http://docs.renjin.org/en/latest/writing-renjin-extensions.html#using-the-hamcrest-package-to-write-unit-tests)
